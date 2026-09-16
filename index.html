@@ -4027,7 +4027,7 @@ function sendPlayback(
 
 
   const stamp =
-    Date.now() + serverTimeOffset;
+    Date.now();
 
 
   lastLocalCommandStamp =
@@ -4050,7 +4050,7 @@ function sendPlayback(
         !!playing,
 
       stamp:
-        stamp,
+        stamp + serverTimeOffset,
 
       sourceKey:
         sourceIdentity(canonicalSource),
@@ -4174,7 +4174,7 @@ function executeRemotePlayback(
   const networkAge = commandStamp && shouldPlay
     ? Math.max(0, (Date.now() + serverTimeOffset) - commandStamp) / 1000
     : 0;
-  const time = Math.max(0, baseTime + Math.min(networkAge, 1.5));
+  const time = baseTime + networkAge;
 
 
   /*
@@ -4342,37 +4342,22 @@ clearInterval(playbackSyncTimer);
 playbackSyncTimer=setInterval(function(){
   const c=lastRemotePlaybackCommand;
   if(!c || !currentSource || c.playing!==true || !mediaReadyForPlayback() || remoteApplying) return;
-
   const sent=Number(c.stamp)||0;
   const expected=Math.max(0,Number(c.time)||0)+(sent?Math.max(0,(Date.now()+serverTimeOffset)-sent)/1000:0);
   const actual=getCurrentTime();
   const drift=expected-actual;
-
-  /* Only correct visible drift. Small differences are left alone so the
-     browser/YouTube player is not constantly disturbed. */
   if(Math.abs(drift)>0.65){
     remoteApplying=true;
     try{
-      if(currentSource.type==="youtube" && youtubePlayerReady && youtubePlayer){
-        youtubePlayer.seekTo(Math.max(0,expected),true);
-      }else if(localVideo && (localVideo.src||localVideo.srcObject)){
-        localVideo.currentTime=Math.max(0,expected);
-      }
+      if(currentSource.type==="youtube" && youtubePlayerReady && youtubePlayer){ youtubePlayer.seekTo(Math.max(0,expected),true); }
+      else { localVideo.currentTime=Math.max(0,expected); }
     }catch(e){}
     clearTimeout(remoteApplyTimer);
     remoteApplyTimer=setTimeout(function(){remoteApplying=false;},450);
+  }else if(Math.abs(drift)>0.18 && currentSource.type!=="youtube" && localVideo.playbackRate!==undefined){
+    try{ localVideo.playbackRate=drift>0?1.04:0.96; setTimeout(function(){if(localVideo) localVideo.playbackRate=1;},700); }catch(e){}
   }
-},1000);
-
-let playbackHeartbeatTimer=null;
-clearInterval(playbackHeartbeatTimer);
-playbackHeartbeatTimer=setInterval(function(){
-  if(!canControl() || !currentSource || remoteApplying || !isMediaPlaying()) return;
-  const now=getCurrentTime();
-  if(!Number.isFinite(now)) return;
-  sendPlayback("sync",now,true);
-},3000);
-
+},2000);
 
 
 /* =========================================================
