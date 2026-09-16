@@ -2807,8 +2807,8 @@ function startRoomListeners(){
 
       if(command.clientId === clientId){ return; }
       if(command.sourceKey && sourceIdentity(canonicalSource) !== command.sourceKey){ return; }
-      if(!sourceReadyForRoom()){ pendingRemotePlayback=command; return; }
       lastRemotePlaybackCommand = command;
+      if(!sourceReadyForRoom()){ pendingRemotePlayback=command; return; }
       applyRemotePlayback(command);
 
     }
@@ -4172,7 +4172,7 @@ function executeRemotePlayback(
   const shouldPlay = command.playing === true;
   const commandStamp = Number(command.stamp) || 0;
   const networkAge = commandStamp && shouldPlay
-    ? Math.max(0, Date.now() - commandStamp) / 1000
+    ? Math.max(0, (Date.now() + serverTimeOffset) - commandStamp) / 1000
     : 0;
   const time = baseTime + networkAge;
 
@@ -4343,7 +4343,7 @@ playbackSyncTimer=setInterval(function(){
   const c=lastRemotePlaybackCommand;
   if(!c || !currentSource || c.playing!==true || !mediaReadyForPlayback() || remoteApplying) return;
   const sent=Number(c.stamp)||0;
-  const expected=Math.max(0,Number(c.time)||0)+(sent?Math.max(0,Date.now()-sent)/1000:0);
+  const expected=Math.max(0,Number(c.time)||0)+(sent?Math.max(0,(Date.now()+serverTimeOffset)-sent)/1000:0);
   const actual=getCurrentTime();
   const drift=expected-actual;
   if(Math.abs(drift)>0.65){
@@ -4667,6 +4667,14 @@ function seekRelative(
     isMediaPlaying();
 
 
+  /* Publish the seek first. If remoteApplying is enabled before
+     sendPlayback(), the sync writer intentionally ignores the command. */
+  sendPlayback(
+    "seek",
+    target,
+    playing
+  );
+
   remoteApplying =
     true;
 
@@ -4720,13 +4728,6 @@ function seekRelative(
     );
 
 
-  sendPlayback(
-    "seek",
-    target,
-    playing
-  );
-
-
   updatePlaybackUI();
 
 }
@@ -4778,13 +4779,14 @@ function commitProgressSeek(){
   if(!duration||!Number.isFinite(duration))return;
   const target=duration*(Number(progress.value)/100);
   const playing=isMediaPlaying();
+  /* Publish before remoteApplying so the sync command is not suppressed. */
+  sendPlayback("seek",target,playing);
   remoteApplying=true;
   clearTimeout(remoteApplyTimer);
   if(currentSource.type==="youtube"&&youtubePlayerReady&&youtubePlayer){try{youtubePlayer.seekTo(target,true);}catch(e){}}
   else if((currentSource.type==="local"||currentSource.type==="remote"||currentSource.type==="p2p-local")&&(localVideo.src||localVideo.srcObject)){try{localVideo.currentTime=target;}catch(e){}}
   clearTimeout(seekSyncTimer);
   seekSyncTimer=setTimeout(function(){remoteApplying=false;},500);
-  sendPlayback("seek",target,playing);
   updatePlaybackUI();
 }
 progress.addEventListener("input",function(){
