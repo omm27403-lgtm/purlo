@@ -1198,6 +1198,415 @@ button{
 50%{transform:translateY(-8px)}}
 .activity-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 12px;background:rgba(255,255,255,.05);border-radius:14px;margin-bottom:12px;font-size:12px}.activity-head span,.activity-score{color:#aaa;font-size:12px}.activity-grid{display:grid;gap:7px}.bingo-grid{grid-template-columns:repeat(5,1fr);max-width:520px;margin:auto}.activity-cell{aspect-ratio:1;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.06);color:#fff;font-weight:800;cursor:pointer}.activity-cell:disabled{opacity:.45;cursor:not-allowed}.activity-cell.available{border-color:rgba(255,110,190,.5)}.activity-cell.on{background:linear-gradient(135deg,rgba(255,79,154,.45),rgba(156,77,255,.45));box-shadow:0 0 18px rgba(255,79,154,.18)}.activity-called{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px}.activity-called span{padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.06);font-size:11px}.activity-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.activity-actions .modal-btn{flex:1;min-width:130px}.activity-big{text-align:center;font-size:48px;font-weight:900;padding:25px 10px}.activity-result{text-align:center;font-size:22px;font-weight:800;padding:28px 10px}.rps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.activity-choice,.color-choice{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;border-radius:18px;padding:18px;cursor:pointer;font-size:30px}.activity-choice small{display:block;font-size:11px;margin-top:7px}.color-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.color-choice{font-size:25px}.color-choice span{display:block;font-size:10px;margin-top:6px}.tap-huge{min-height:90px;font-size:28px}.spin-wheel{text-align:center;font-size:64px;animation:purloSpin 1s ease}.spin-text{font-size:22px;min-height:100px}@keyframes purloSpin{from{transform:rotate(-20deg)}to{transform:rotate(340deg)}}@media(max-width:520px){.rps-row,.color-grid{grid-template-columns:1fr 1fr}.activity-actions{flex-direction:column}.activity-actions .modal-btn{width:100%}}
 </style>
+<style id="purlo3dUI">
+/* =========================================================
+   PURLO 3D UI — VISUAL LAYER ONLY
+   Couple = rose/violet crystal 3D
+   Group  = cyan/indigo futuristic 3D
+   No application logic is changed by this layer.
+========================================================= */
+:root{
+  --p3d-accent:#b86cff;
+  --p3d-accent2:#ff5fa2;
+  --p3d-glow:rgba(184,108,255,.42);
+  --p3d-glow2:rgba(255,95,162,.28);
+  --p3d-surface:rgba(19,16,31,.66);
+  --p3d-surface2:rgba(255,255,255,.055);
+  --p3d-border:rgba(255,255,255,.14);
+  --p3d-text:#fff;
+  --p3d-depth:rgba(7,5,15,.7);
+}
+
+/* The mode classes are applied by the tiny UI observer below. */
+body.purlo-couple{
+  --p3d-accent:#ff63ad;
+  --p3d-accent2:#9f72ff;
+  --p3d-glow:rgba(255,82,170,.44);
+  --p3d-glow2:rgba(145,91,255,.32);
+  --p3d-surface:rgba(28,16,39,.68);
+}
+body.purlo-group{
+  --p3d-accent:#48d9ff;
+  --p3d-accent2:#6677ff;
+  --p3d-glow:rgba(52,214,255,.38);
+  --p3d-glow2:rgba(88,102,255,.30);
+  --p3d-surface:rgba(10,19,34,.70);
+}
+
+body::before,
+body::after{
+  content:"";
+  position:fixed;
+  pointer-events:none;
+  z-index:-1;
+  border-radius:50%;
+  filter:blur(55px);
+  transform:translateZ(0);
+}
+body::before{
+  width:34vw;
+  height:34vw;
+  left:-9vw;
+  top:9vh;
+  background:radial-gradient(circle, var(--p3d-glow), transparent 68%);
+  opacity:.75;
+}
+body::after{
+  width:38vw;
+  height:38vw;
+  right:-12vw;
+  bottom:-8vw;
+  background:radial-gradient(circle, var(--p3d-glow2), transparent 67%);
+  opacity:.7;
+}
+
+/* ---------- LOGIN: floating 3D crystal card ---------- */
+#loginScreen{
+  perspective:1400px;
+  isolation:isolate;
+}
+#loginScreen::before{
+  content:"";
+  position:absolute;
+  width:320px;
+  height:320px;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) translateZ(-80px);
+  border-radius:50%;
+  background:radial-gradient(circle,var(--p3d-glow),transparent 68%);
+  filter:blur(35px);
+  pointer-events:none;
+  animation:p3dBreath 5s ease-in-out infinite;
+}
+
+#loginScreen .login-card,
+#loginScreen .login-panel,
+#loginScreen .glass-card{
+  transform-style:preserve-3d;
+}
+
+#loginScreen .modal,
+#loginScreen .login-card,
+#loginScreen > div[class*="card"]{
+  border:1px solid var(--p3d-border);
+  background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.035) 42%,rgba(0,0,0,.22));
+  box-shadow:0 35px 80px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.16),0 0 45px var(--p3d-glow2);
+  backdrop-filter:blur(26px) saturate(140%);
+  -webkit-backdrop-filter:blur(26px) saturate(140%);
+}
+
+.start-mode-option,
+#generateRoomButton,
+#enterButton{
+  position:relative;
+  overflow:hidden;
+  transform-style:preserve-3d;
+  border:1px solid var(--p3d-border)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025))!important;
+  box-shadow:0 12px 24px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.16),inset 0 -10px 22px rgba(0,0,0,.10)!important;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease,filter .22s ease;
+}
+.start-mode-option::before,
+#generateRoomButton::before,
+#enterButton::before,
+.video-action::before,
+.control-btn::before,
+.modal-btn::before,
+.game-card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.18) 45%,transparent 67%);
+  transform:translateX(-125%);
+  transition:transform .55s ease;
+  pointer-events:none;
+}
+.start-mode-option:hover,
+#generateRoomButton:hover,
+#enterButton:hover,
+.video-action:hover,
+.control-btn:hover,
+.modal-btn:hover,
+.game-card:hover{
+  transform:translateY(-3px) translateZ(10px);
+  box-shadow:0 18px 35px rgba(0,0,0,.38),0 0 25px var(--p3d-glow2),inset 0 1px 0 rgba(255,255,255,.22)!important;
+  border-color:color-mix(in srgb,var(--p3d-accent) 55%,transparent)!important;
+}
+.start-mode-option:hover::before,
+#generateRoomButton:hover::before,
+#enterButton:hover::before,
+.video-action:hover::before,
+.control-btn:hover::before,
+.modal-btn:hover::before,
+.game-card:hover::before{transform:translateX(125%);}
+
+.start-mode-option.selected{
+  border-color:color-mix(in srgb,var(--p3d-accent) 72%,white 5%)!important;
+  box-shadow:0 18px 34px rgba(0,0,0,.34),0 0 30px var(--p3d-glow),inset 0 1px 0 rgba(255,255,255,.25)!important;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--p3d-accent) 18%,transparent),rgba(255,255,255,.045))!important;
+  transform:translateY(-2px) translateZ(16px);
+}
+
+/* ---------- APP SHELL ---------- */
+#app{
+  perspective:1800px;
+}
+#app .header,
+#app .panel,
+#app .video-panel,
+#app .chat-panel,
+#app .topbar,
+#app .card{
+  border-color:var(--p3d-border)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018) 48%,rgba(0,0,0,.18))!important;
+  box-shadow:0 22px 55px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.12),0 0 32px rgba(0,0,0,.16)!important;
+  backdrop-filter:blur(20px) saturate(135%);
+  -webkit-backdrop-filter:blur(20px) saturate(135%);
+}
+
+.logo{
+  text-shadow:0 0 18px var(--p3d-glow),0 0 42px var(--p3d-glow2);
+  transform:translateZ(20px);
+}
+
+.top-pill,
+.mode-pill,
+.room-pill,
+.participant-pill,
+#participantPill{
+  border:1px solid var(--p3d-border)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.025))!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.16),0 0 18px var(--p3d-glow2)!important;
+  transform:translateZ(12px);
+}
+
+/* ---------- 3D VIDEO STAGE ---------- */
+.video-stage,
+#videoStage{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--p3d-border)!important;
+  border-radius:24px!important;
+  background:linear-gradient(145deg,#11111a,#08080d)!important;
+  box-shadow:0 28px 70px rgba(0,0,0,.52),0 0 45px var(--p3d-glow2),inset 0 1px 0 rgba(255,255,255,.12)!important;
+  transform-style:preserve-3d;
+}
+#videoStage::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:3;
+  background:linear-gradient(120deg,rgba(255,255,255,.10),transparent 23%,transparent 74%,rgba(255,255,255,.045));
+  mix-blend-mode:screen;
+}
+#videoStage::after{
+  content:"";
+  position:absolute;
+  width:45%;
+  height:70%;
+  right:-20%;
+  top:-35%;
+  border-radius:50%;
+  pointer-events:none;
+  background:radial-gradient(circle,var(--p3d-glow),transparent 70%);
+  filter:blur(35px);
+  opacity:.35;
+  z-index:2;
+}
+
+.video-controls,
+.video-bottom,
+.video-actions,
+.video-toolbar{
+  transform:translateZ(22px);
+}
+
+.video-action,
+.control-btn,
+#backButton,#playButton,#forwardButton,#ccButton,#muteButton,#fullscreenButton,
+#changeSource,#uploadVideo{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--p3d-border)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.035))!important;
+  box-shadow:0 9px 24px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.16)!important;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  transition:.2s ease;
+}
+#playButton{
+  background:linear-gradient(145deg,color-mix(in srgb,var(--p3d-accent) 30%,transparent),rgba(255,255,255,.06))!important;
+  box-shadow:0 10px 28px var(--p3d-glow),inset 0 1px 0 rgba(255,255,255,.2)!important;
+}
+
+/* ---------- CHAT AS A FLOATING 3D PANEL ---------- */
+.chat-panel{
+  transform-style:preserve-3d;
+}
+#chatMessages .message,
+.chat-message,
+.message-bubble{
+  border:1px solid rgba(255,255,255,.10)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035))!important;
+  box-shadow:0 10px 24px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(13px);
+  -webkit-backdrop-filter:blur(13px);
+  transform:translateZ(8px);
+}
+#chatInput{
+  border:1px solid var(--p3d-border)!important;
+  background:rgba(255,255,255,.045)!important;
+  box-shadow:inset 0 2px 12px rgba(0,0,0,.22),0 0 18px transparent!important;
+}
+#chatInput:focus{
+  border-color:color-mix(in srgb,var(--p3d-accent) 65%,transparent)!important;
+  box-shadow:0 0 22px var(--p3d-glow2),inset 0 2px 12px rgba(0,0,0,.20)!important;
+}
+
+/* ---------- SOURCE / MODE / ADMIN MODALS ---------- */
+.modal-backdrop{
+  perspective:1400px;
+  background:rgba(2,2,8,.62)!important;
+  backdrop-filter:blur(14px)!important;
+  -webkit-backdrop-filter:blur(14px)!important;
+}
+.modal,
+.game-center-window,
+.quick-game-modal,
+.extra-game-modal,
+.challenge-modal,
+.long-game-modal{
+  border:1px solid var(--p3d-border)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.025) 46%,rgba(0,0,0,.24))!important;
+  box-shadow:0 40px 100px rgba(0,0,0,.58),0 0 55px var(--p3d-glow2),inset 0 1px 0 rgba(255,255,255,.16)!important;
+  backdrop-filter:blur(28px) saturate(140%)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(140%)!important;
+  transform:translateZ(30px) rotateX(.7deg);
+}
+.modal h2,
+.game-center-title,
+.challenge-title,
+.quick-game-title,
+.extra-game-title{
+  text-shadow:0 0 20px var(--p3d-glow2);
+}
+.modal-btn{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--p3d-border)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025))!important;
+  box-shadow:0 10px 24px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.14)!important;
+}
+.modal-btn.primary{
+  background:linear-gradient(145deg,color-mix(in srgb,var(--p3d-accent) 34%,transparent),color-mix(in srgb,var(--p3d-accent2) 18%,transparent))!important;
+  box-shadow:0 12px 28px var(--p3d-glow2),inset 0 1px 0 rgba(255,255,255,.22)!important;
+}
+
+/* ---------- GAME CENTER: 3D CARDS ---------- */
+.game-center-window{
+  transform-style:preserve-3d;
+}
+.game-card,
+.game-center-card,
+.featured-game,
+.quick-game-card{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--p3d-border)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.025))!important;
+  box-shadow:0 16px 34px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.12)!important;
+  transform-style:preserve-3d;
+  transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease;
+}
+.game-card:hover,
+.game-center-card:hover,
+.featured-game:hover,
+.quick-game-card:hover{
+  transform:translateY(-7px) rotateX(2deg) rotateY(-2deg) translateZ(18px);
+  box-shadow:0 25px 45px rgba(0,0,0,.38),0 0 32px var(--p3d-glow2),inset 0 1px 0 rgba(255,255,255,.18)!important;
+}
+
+/* ---------- MEMBER LIST / DROPDOWNS ---------- */
+#memberList,
+.participant-list,
+.member-dropdown,
+.dropdown-menu{
+  border:1px solid var(--p3d-border)!important;
+  background:linear-gradient(145deg,rgba(20,20,32,.92),rgba(8,8,15,.88))!important;
+  box-shadow:0 22px 48px rgba(0,0,0,.48),0 0 24px var(--p3d-glow2)!important;
+  backdrop-filter:blur(22px)!important;
+  -webkit-backdrop-filter:blur(22px)!important;
+}
+
+/* ---------- INPUTS ---------- */
+input,select,textarea{
+  border-color:rgba(255,255,255,.12)!important;
+  background:rgba(255,255,255,.045)!important;
+  box-shadow:inset 0 2px 14px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.06)!important;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:color-mix(in srgb,var(--p3d-accent) 62%,transparent)!important;
+  box-shadow:0 0 22px var(--p3d-glow2),inset 0 2px 14px rgba(0,0,0,.18)!important;
+}
+
+/* ---------- FLOATING REACTIONS / CHAT ---------- */
+.floating-reaction,
+.floating-chat{
+  filter:drop-shadow(0 8px 18px rgba(0,0,0,.42));
+  text-shadow:0 0 20px var(--p3d-glow);
+}
+.floating-chat{
+  border:1px solid rgba(255,255,255,.13)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.04))!important;
+  box-shadow:0 18px 38px rgba(0,0,0,.38),0 0 24px var(--p3d-glow2)!important;
+  backdrop-filter:blur(18px);
+}
+
+/* ---------- MODE-SPECIFIC VISUAL IDENTITY ---------- */
+body.purlo-couple .game-center-window,
+body.purlo-couple .modal,
+body.purlo-couple #videoStage{
+  box-shadow:0 32px 80px rgba(0,0,0,.48),0 0 48px rgba(255,87,174,.20),0 0 70px rgba(145,91,255,.12),inset 0 1px 0 rgba(255,255,255,.15)!important;
+}
+body.purlo-group .game-center-window,
+body.purlo-group .modal,
+body.purlo-group #videoStage{
+  box-shadow:0 32px 80px rgba(0,0,0,.52),0 0 48px rgba(53,213,255,.18),0 0 70px rgba(90,100,255,.12),inset 0 1px 0 rgba(255,255,255,.15)!important;
+}
+body.purlo-group .logo::after{
+  content:"GROUP";
+  margin-left:9px;
+  font-size:.34em;
+  letter-spacing:.22em;
+  opacity:.65;
+  vertical-align:middle;
+}
+body.purlo-couple .logo::after{
+  content:"TOGETHER";
+  margin-left:9px;
+  font-size:.34em;
+  letter-spacing:.22em;
+  opacity:.65;
+  vertical-align:middle;
+}
+
+/* ---------- MOBILE ---------- */
+@media (max-width:900px){
+  #app .header{backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important;}
+  #videoStage{border-radius:18px!important;}
+  .game-card:hover,.game-center-card:hover,.featured-game:hover,.quick-game-card:hover{transform:translateY(-3px) translateZ(8px);}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important;}
+}
+
+@keyframes p3dBreath{
+  0%,100%{transform:translate(-50%,-50%) scale(.92);opacity:.62;}
+  50%{transform:translate(-50%,-50%) scale(1.08);opacity:.9;}
+}
+</style>
 </head>
 
 <body>
@@ -4027,7 +4436,7 @@ function sendPlayback(
 
 
   const stamp =
-    Date.now();
+    Date.now() + serverTimeOffset;
 
 
   lastLocalCommandStamp =
@@ -4050,7 +4459,7 @@ function sendPlayback(
         !!playing,
 
       stamp:
-        stamp + serverTimeOffset,
+        stamp,
 
       sourceKey:
         sourceIdentity(canonicalSource),
@@ -4174,7 +4583,7 @@ function executeRemotePlayback(
   const networkAge = commandStamp && shouldPlay
     ? Math.max(0, (Date.now() + serverTimeOffset) - commandStamp) / 1000
     : 0;
-  const time = baseTime + networkAge;
+  const time = Math.max(0, baseTime + Math.min(networkAge, 1.5));
 
 
   /*
@@ -4342,22 +4751,37 @@ clearInterval(playbackSyncTimer);
 playbackSyncTimer=setInterval(function(){
   const c=lastRemotePlaybackCommand;
   if(!c || !currentSource || c.playing!==true || !mediaReadyForPlayback() || remoteApplying) return;
+
   const sent=Number(c.stamp)||0;
   const expected=Math.max(0,Number(c.time)||0)+(sent?Math.max(0,(Date.now()+serverTimeOffset)-sent)/1000:0);
   const actual=getCurrentTime();
   const drift=expected-actual;
+
+  /* Only correct visible drift. Small differences are left alone so the
+     browser/YouTube player is not constantly disturbed. */
   if(Math.abs(drift)>0.65){
     remoteApplying=true;
     try{
-      if(currentSource.type==="youtube" && youtubePlayerReady && youtubePlayer){ youtubePlayer.seekTo(Math.max(0,expected),true); }
-      else { localVideo.currentTime=Math.max(0,expected); }
+      if(currentSource.type==="youtube" && youtubePlayerReady && youtubePlayer){
+        youtubePlayer.seekTo(Math.max(0,expected),true);
+      }else if(localVideo && (localVideo.src||localVideo.srcObject)){
+        localVideo.currentTime=Math.max(0,expected);
+      }
     }catch(e){}
     clearTimeout(remoteApplyTimer);
     remoteApplyTimer=setTimeout(function(){remoteApplying=false;},450);
-  }else if(Math.abs(drift)>0.18 && currentSource.type!=="youtube" && localVideo.playbackRate!==undefined){
-    try{ localVideo.playbackRate=drift>0?1.04:0.96; setTimeout(function(){if(localVideo) localVideo.playbackRate=1;},700); }catch(e){}
   }
-},2000);
+},1000);
+
+let playbackHeartbeatTimer=null;
+clearInterval(playbackHeartbeatTimer);
+playbackHeartbeatTimer=setInterval(function(){
+  if(!canControl() || !currentSource || remoteApplying || !isMediaPlaying()) return;
+  const now=getCurrentTime();
+  if(!Number.isFinite(now)) return;
+  sendPlayback("sync",now,true);
+},3000);
+
 
 
 /* =========================================================
@@ -7468,5 +7892,34 @@ async function quickRestart(){if(!quickRef)return;const players=(await quickRef.
 async function startQuickGame(key){if(!roomRef){showToast("Join a room first.");return;}quickKey=key;clearTimeout(quickTimer);qgo.classList.remove("hidden");document.body.style.overflow="hidden";quickRef=roomRef.child("games/quick/"+key);try{let snap=await quickRef.once("value");if(!snap.exists())await quickRef.set(quickDefault(key));await quickEnsurePlayer();if(quickListener)quickRef.off("value",quickListener);quickListener=s=>{quickState=s.val()||quickDefault(key);quickRender();};quickRef.on("value",quickListener);}catch(e){console.error(e);showToast("Could not open this game.");}}
 function closeQuickGame(){clearTimeout(quickTimer);if(quickRef&&quickListener)quickRef.off("value",quickListener);quickRef=null;quickListener=null;quickState=null;quickKey="";qgo.classList.add("hidden");document.body.style.overflow="";}
 document.getElementById("quickGameClose")?.addEventListener("click",closeQuickGame);qnext?.addEventListener("click",quickNext);qrestart?.addEventListener("click",quickRestart);</script>
+
+<script>
+/* =========================================================
+   PURLO 3D UI MODE SWITCHER — VISUAL ONLY
+   Reads the existing mode text/selection and adds a CSS class.
+   It does not change Firebase, playback, games, or room logic.
+========================================================= */
+(function(){
+  function setVisualMode(){
+    const pill=document.getElementById("modePill");
+    const couple=document.getElementById("startCoupleMode");
+    const group=document.getElementById("startGroupMode");
+    const text=(pill?.textContent||"").toLowerCase();
+    document.body.classList.toggle("purlo-group", text.includes("group"));
+    document.body.classList.toggle("purlo-couple", !text.includes("group"));
+    if(!pill && group?.classList.contains("selected")){
+      document.body.classList.add("purlo-group");
+      document.body.classList.remove("purlo-couple");
+    }
+  }
+  setVisualMode();
+  const pill=document.getElementById("modePill");
+  if(pill){new MutationObserver(setVisualMode).observe(pill,{childList:true,characterData:true,subtree:true});}
+  const couple=document.getElementById("startCoupleMode");
+  const group=document.getElementById("startGroupMode");
+  [couple,group].forEach(el=>el&&new MutationObserver(setVisualMode).observe(el,{attributes:true,attributeFilter:["class"]}));
+})();
+</script>
+
 </body>
 </html>
