@@ -1198,415 +1198,6 @@ button{
 50%{transform:translateY(-8px)}}
 .activity-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 12px;background:rgba(255,255,255,.05);border-radius:14px;margin-bottom:12px;font-size:12px}.activity-head span,.activity-score{color:#aaa;font-size:12px}.activity-grid{display:grid;gap:7px}.bingo-grid{grid-template-columns:repeat(5,1fr);max-width:520px;margin:auto}.activity-cell{aspect-ratio:1;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.06);color:#fff;font-weight:800;cursor:pointer}.activity-cell:disabled{opacity:.45;cursor:not-allowed}.activity-cell.available{border-color:rgba(255,110,190,.5)}.activity-cell.on{background:linear-gradient(135deg,rgba(255,79,154,.45),rgba(156,77,255,.45));box-shadow:0 0 18px rgba(255,79,154,.18)}.activity-called{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px}.activity-called span{padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.06);font-size:11px}.activity-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.activity-actions .modal-btn{flex:1;min-width:130px}.activity-big{text-align:center;font-size:48px;font-weight:900;padding:25px 10px}.activity-result{text-align:center;font-size:22px;font-weight:800;padding:28px 10px}.rps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.activity-choice,.color-choice{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;border-radius:18px;padding:18px;cursor:pointer;font-size:30px}.activity-choice small{display:block;font-size:11px;margin-top:7px}.color-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.color-choice{font-size:25px}.color-choice span{display:block;font-size:10px;margin-top:6px}.tap-huge{min-height:90px;font-size:28px}.spin-wheel{text-align:center;font-size:64px;animation:purloSpin 1s ease}.spin-text{font-size:22px;min-height:100px}@keyframes purloSpin{from{transform:rotate(-20deg)}to{transform:rotate(340deg)}}@media(max-width:520px){.rps-row,.color-grid{grid-template-columns:1fr 1fr}.activity-actions{flex-direction:column}.activity-actions .modal-btn{width:100%}}
 </style>
-<style id="purlo3dUI">
-/* =========================================================
-   PURLO 3D UI — VISUAL LAYER ONLY
-   Couple = rose/violet crystal 3D
-   Group  = cyan/indigo futuristic 3D
-   No application logic is changed by this layer.
-========================================================= */
-:root{
-  --p3d-accent:#b86cff;
-  --p3d-accent2:#ff5fa2;
-  --p3d-glow:rgba(184,108,255,.42);
-  --p3d-glow2:rgba(255,95,162,.28);
-  --p3d-surface:rgba(19,16,31,.66);
-  --p3d-surface2:rgba(255,255,255,.055);
-  --p3d-border:rgba(255,255,255,.14);
-  --p3d-text:#fff;
-  --p3d-depth:rgba(7,5,15,.7);
-}
-
-/* The mode classes are applied by the tiny UI observer below. */
-body.purlo-couple{
-  --p3d-accent:#ff63ad;
-  --p3d-accent2:#9f72ff;
-  --p3d-glow:rgba(255,82,170,.44);
-  --p3d-glow2:rgba(145,91,255,.32);
-  --p3d-surface:rgba(28,16,39,.68);
-}
-body.purlo-group{
-  --p3d-accent:#48d9ff;
-  --p3d-accent2:#6677ff;
-  --p3d-glow:rgba(52,214,255,.38);
-  --p3d-glow2:rgba(88,102,255,.30);
-  --p3d-surface:rgba(10,19,34,.70);
-}
-
-body::before,
-body::after{
-  content:"";
-  position:fixed;
-  pointer-events:none;
-  z-index:-1;
-  border-radius:50%;
-  filter:blur(55px);
-  transform:translateZ(0);
-}
-body::before{
-  width:34vw;
-  height:34vw;
-  left:-9vw;
-  top:9vh;
-  background:radial-gradient(circle, var(--p3d-glow), transparent 68%);
-  opacity:.75;
-}
-body::after{
-  width:38vw;
-  height:38vw;
-  right:-12vw;
-  bottom:-8vw;
-  background:radial-gradient(circle, var(--p3d-glow2), transparent 67%);
-  opacity:.7;
-}
-
-/* ---------- LOGIN: floating 3D crystal card ---------- */
-#loginScreen{
-  perspective:1400px;
-  isolation:isolate;
-}
-#loginScreen::before{
-  content:"";
-  position:absolute;
-  width:320px;
-  height:320px;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%) translateZ(-80px);
-  border-radius:50%;
-  background:radial-gradient(circle,var(--p3d-glow),transparent 68%);
-  filter:blur(35px);
-  pointer-events:none;
-  animation:p3dBreath 5s ease-in-out infinite;
-}
-
-#loginScreen .login-card,
-#loginScreen .login-panel,
-#loginScreen .glass-card{
-  transform-style:preserve-3d;
-}
-
-#loginScreen .modal,
-#loginScreen .login-card,
-#loginScreen > div[class*="card"]{
-  border:1px solid var(--p3d-border);
-  background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.035) 42%,rgba(0,0,0,.22));
-  box-shadow:0 35px 80px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.16),0 0 45px var(--p3d-glow2);
-  backdrop-filter:blur(26px) saturate(140%);
-  -webkit-backdrop-filter:blur(26px) saturate(140%);
-}
-
-.start-mode-option,
-#generateRoomButton,
-#enterButton{
-  position:relative;
-  overflow:hidden;
-  transform-style:preserve-3d;
-  border:1px solid var(--p3d-border)!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025))!important;
-  box-shadow:0 12px 24px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.16),inset 0 -10px 22px rgba(0,0,0,.10)!important;
-  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease,filter .22s ease;
-}
-.start-mode-option::before,
-#generateRoomButton::before,
-#enterButton::before,
-.video-action::before,
-.control-btn::before,
-.modal-btn::before,
-.game-card::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.18) 45%,transparent 67%);
-  transform:translateX(-125%);
-  transition:transform .55s ease;
-  pointer-events:none;
-}
-.start-mode-option:hover,
-#generateRoomButton:hover,
-#enterButton:hover,
-.video-action:hover,
-.control-btn:hover,
-.modal-btn:hover,
-.game-card:hover{
-  transform:translateY(-3px) translateZ(10px);
-  box-shadow:0 18px 35px rgba(0,0,0,.38),0 0 25px var(--p3d-glow2),inset 0 1px 0 rgba(255,255,255,.22)!important;
-  border-color:color-mix(in srgb,var(--p3d-accent) 55%,transparent)!important;
-}
-.start-mode-option:hover::before,
-#generateRoomButton:hover::before,
-#enterButton:hover::before,
-.video-action:hover::before,
-.control-btn:hover::before,
-.modal-btn:hover::before,
-.game-card:hover::before{transform:translateX(125%);}
-
-.start-mode-option.selected{
-  border-color:color-mix(in srgb,var(--p3d-accent) 72%,white 5%)!important;
-  box-shadow:0 18px 34px rgba(0,0,0,.34),0 0 30px var(--p3d-glow),inset 0 1px 0 rgba(255,255,255,.25)!important;
-  background:linear-gradient(145deg,color-mix(in srgb,var(--p3d-accent) 18%,transparent),rgba(255,255,255,.045))!important;
-  transform:translateY(-2px) translateZ(16px);
-}
-
-/* ---------- APP SHELL ---------- */
-#app{
-  perspective:1800px;
-}
-#app .header,
-#app .panel,
-#app .video-panel,
-#app .chat-panel,
-#app .topbar,
-#app .card{
-  border-color:var(--p3d-border)!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018) 48%,rgba(0,0,0,.18))!important;
-  box-shadow:0 22px 55px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.12),0 0 32px rgba(0,0,0,.16)!important;
-  backdrop-filter:blur(20px) saturate(135%);
-  -webkit-backdrop-filter:blur(20px) saturate(135%);
-}
-
-.logo{
-  text-shadow:0 0 18px var(--p3d-glow),0 0 42px var(--p3d-glow2);
-  transform:translateZ(20px);
-}
-
-.top-pill,
-.mode-pill,
-.room-pill,
-.participant-pill,
-#participantPill{
-  border:1px solid var(--p3d-border)!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.025))!important;
-  box-shadow:0 8px 22px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.16),0 0 18px var(--p3d-glow2)!important;
-  transform:translateZ(12px);
-}
-
-/* ---------- 3D VIDEO STAGE ---------- */
-.video-stage,
-#videoStage{
-  position:relative;
-  overflow:hidden;
-  border:1px solid var(--p3d-border)!important;
-  border-radius:24px!important;
-  background:linear-gradient(145deg,#11111a,#08080d)!important;
-  box-shadow:0 28px 70px rgba(0,0,0,.52),0 0 45px var(--p3d-glow2),inset 0 1px 0 rgba(255,255,255,.12)!important;
-  transform-style:preserve-3d;
-}
-#videoStage::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:3;
-  background:linear-gradient(120deg,rgba(255,255,255,.10),transparent 23%,transparent 74%,rgba(255,255,255,.045));
-  mix-blend-mode:screen;
-}
-#videoStage::after{
-  content:"";
-  position:absolute;
-  width:45%;
-  height:70%;
-  right:-20%;
-  top:-35%;
-  border-radius:50%;
-  pointer-events:none;
-  background:radial-gradient(circle,var(--p3d-glow),transparent 70%);
-  filter:blur(35px);
-  opacity:.35;
-  z-index:2;
-}
-
-.video-controls,
-.video-bottom,
-.video-actions,
-.video-toolbar{
-  transform:translateZ(22px);
-}
-
-.video-action,
-.control-btn,
-#backButton,#playButton,#forwardButton,#ccButton,#muteButton,#fullscreenButton,
-#changeSource,#uploadVideo{
-  position:relative;
-  overflow:hidden;
-  border:1px solid var(--p3d-border)!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.035))!important;
-  box-shadow:0 9px 24px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.16)!important;
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-  transition:.2s ease;
-}
-#playButton{
-  background:linear-gradient(145deg,color-mix(in srgb,var(--p3d-accent) 30%,transparent),rgba(255,255,255,.06))!important;
-  box-shadow:0 10px 28px var(--p3d-glow),inset 0 1px 0 rgba(255,255,255,.2)!important;
-}
-
-/* ---------- CHAT AS A FLOATING 3D PANEL ---------- */
-.chat-panel{
-  transform-style:preserve-3d;
-}
-#chatMessages .message,
-.chat-message,
-.message-bubble{
-  border:1px solid rgba(255,255,255,.10)!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035))!important;
-  box-shadow:0 10px 24px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.10)!important;
-  backdrop-filter:blur(13px);
-  -webkit-backdrop-filter:blur(13px);
-  transform:translateZ(8px);
-}
-#chatInput{
-  border:1px solid var(--p3d-border)!important;
-  background:rgba(255,255,255,.045)!important;
-  box-shadow:inset 0 2px 12px rgba(0,0,0,.22),0 0 18px transparent!important;
-}
-#chatInput:focus{
-  border-color:color-mix(in srgb,var(--p3d-accent) 65%,transparent)!important;
-  box-shadow:0 0 22px var(--p3d-glow2),inset 0 2px 12px rgba(0,0,0,.20)!important;
-}
-
-/* ---------- SOURCE / MODE / ADMIN MODALS ---------- */
-.modal-backdrop{
-  perspective:1400px;
-  background:rgba(2,2,8,.62)!important;
-  backdrop-filter:blur(14px)!important;
-  -webkit-backdrop-filter:blur(14px)!important;
-}
-.modal,
-.game-center-window,
-.quick-game-modal,
-.extra-game-modal,
-.challenge-modal,
-.long-game-modal{
-  border:1px solid var(--p3d-border)!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.025) 46%,rgba(0,0,0,.24))!important;
-  box-shadow:0 40px 100px rgba(0,0,0,.58),0 0 55px var(--p3d-glow2),inset 0 1px 0 rgba(255,255,255,.16)!important;
-  backdrop-filter:blur(28px) saturate(140%)!important;
-  -webkit-backdrop-filter:blur(28px) saturate(140%)!important;
-  transform:translateZ(30px) rotateX(.7deg);
-}
-.modal h2,
-.game-center-title,
-.challenge-title,
-.quick-game-title,
-.extra-game-title{
-  text-shadow:0 0 20px var(--p3d-glow2);
-}
-.modal-btn{
-  position:relative;
-  overflow:hidden;
-  border:1px solid var(--p3d-border)!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025))!important;
-  box-shadow:0 10px 24px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.14)!important;
-}
-.modal-btn.primary{
-  background:linear-gradient(145deg,color-mix(in srgb,var(--p3d-accent) 34%,transparent),color-mix(in srgb,var(--p3d-accent2) 18%,transparent))!important;
-  box-shadow:0 12px 28px var(--p3d-glow2),inset 0 1px 0 rgba(255,255,255,.22)!important;
-}
-
-/* ---------- GAME CENTER: 3D CARDS ---------- */
-.game-center-window{
-  transform-style:preserve-3d;
-}
-.game-card,
-.game-center-card,
-.featured-game,
-.quick-game-card{
-  position:relative;
-  overflow:hidden;
-  border:1px solid var(--p3d-border)!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.025))!important;
-  box-shadow:0 16px 34px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.12)!important;
-  transform-style:preserve-3d;
-  transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease;
-}
-.game-card:hover,
-.game-center-card:hover,
-.featured-game:hover,
-.quick-game-card:hover{
-  transform:translateY(-7px) rotateX(2deg) rotateY(-2deg) translateZ(18px);
-  box-shadow:0 25px 45px rgba(0,0,0,.38),0 0 32px var(--p3d-glow2),inset 0 1px 0 rgba(255,255,255,.18)!important;
-}
-
-/* ---------- MEMBER LIST / DROPDOWNS ---------- */
-#memberList,
-.participant-list,
-.member-dropdown,
-.dropdown-menu{
-  border:1px solid var(--p3d-border)!important;
-  background:linear-gradient(145deg,rgba(20,20,32,.92),rgba(8,8,15,.88))!important;
-  box-shadow:0 22px 48px rgba(0,0,0,.48),0 0 24px var(--p3d-glow2)!important;
-  backdrop-filter:blur(22px)!important;
-  -webkit-backdrop-filter:blur(22px)!important;
-}
-
-/* ---------- INPUTS ---------- */
-input,select,textarea{
-  border-color:rgba(255,255,255,.12)!important;
-  background:rgba(255,255,255,.045)!important;
-  box-shadow:inset 0 2px 14px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.06)!important;
-}
-input:focus,select:focus,textarea:focus{
-  border-color:color-mix(in srgb,var(--p3d-accent) 62%,transparent)!important;
-  box-shadow:0 0 22px var(--p3d-glow2),inset 0 2px 14px rgba(0,0,0,.18)!important;
-}
-
-/* ---------- FLOATING REACTIONS / CHAT ---------- */
-.floating-reaction,
-.floating-chat{
-  filter:drop-shadow(0 8px 18px rgba(0,0,0,.42));
-  text-shadow:0 0 20px var(--p3d-glow);
-}
-.floating-chat{
-  border:1px solid rgba(255,255,255,.13)!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.04))!important;
-  box-shadow:0 18px 38px rgba(0,0,0,.38),0 0 24px var(--p3d-glow2)!important;
-  backdrop-filter:blur(18px);
-}
-
-/* ---------- MODE-SPECIFIC VISUAL IDENTITY ---------- */
-body.purlo-couple .game-center-window,
-body.purlo-couple .modal,
-body.purlo-couple #videoStage{
-  box-shadow:0 32px 80px rgba(0,0,0,.48),0 0 48px rgba(255,87,174,.20),0 0 70px rgba(145,91,255,.12),inset 0 1px 0 rgba(255,255,255,.15)!important;
-}
-body.purlo-group .game-center-window,
-body.purlo-group .modal,
-body.purlo-group #videoStage{
-  box-shadow:0 32px 80px rgba(0,0,0,.52),0 0 48px rgba(53,213,255,.18),0 0 70px rgba(90,100,255,.12),inset 0 1px 0 rgba(255,255,255,.15)!important;
-}
-body.purlo-group .logo::after{
-  content:"GROUP";
-  margin-left:9px;
-  font-size:.34em;
-  letter-spacing:.22em;
-  opacity:.65;
-  vertical-align:middle;
-}
-body.purlo-couple .logo::after{
-  content:"TOGETHER";
-  margin-left:9px;
-  font-size:.34em;
-  letter-spacing:.22em;
-  opacity:.65;
-  vertical-align:middle;
-}
-
-/* ---------- MOBILE ---------- */
-@media (max-width:900px){
-  #app .header{backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important;}
-  #videoStage{border-radius:18px!important;}
-  .game-card:hover,.game-center-card:hover,.featured-game:hover,.quick-game-card:hover{transform:translateY(-3px) translateZ(8px);}
-}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important;}
-}
-
-@keyframes p3dBreath{
-  0%,100%{transform:translate(-50%,-50%) scale(.92);opacity:.62;}
-  50%{transform:translate(-50%,-50%) scale(1.08);opacity:.9;}
-}
-</style>
 </head>
 
 <body>
@@ -2169,6 +1760,7 @@ body.purlo-couple .logo::after{
       <div class="game-card" data-game="tic-tac-toe"><span class="soon">PLAY</span><div class="icon">❌⭕</div><h4>Tic-Tac-Toe</h4><p>Fast real-time multiplayer.</p></div>
       <div class="game-card" data-game="memory"><span class="soon">PLAY</span><div class="icon">🧠</div><h4>Memory Match</h4><p>Find pairs and build your score.</p></div>
       <div class="game-card" data-game="connect-four"><span class="soon">PLAY</span><div class="icon">🔴</div><h4>Connect Four</h4><p>Classic four-in-a-row battle.</p></div>
+      <div class="game-card" data-game="doodle"><span class="soon">PLAY</span><div class="icon">🎨</div><h4>Doodle</h4><p>Draw, guess and switch roles in real time.</p></div>
     </div>
 
     <div class="game-section-title">💕 Couple Games</div>
@@ -2186,6 +1778,32 @@ body.purlo-couple .logo::after{
 </div>
 
 
+
+<!-- DOODLE -->
+<style>
+.doodle-modal{width:min(920px,calc(100% - 24px));max-height:calc(100vh - 24px);overflow:auto;padding:20px;border-radius:26px;background:rgba(15,11,24,.97);border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 100px rgba(0,0,0,.65);color:#fff}
+.doodle-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:14px}.doodle-title{font-size:25px;font-weight:850}.doodle-sub{margin-top:5px;font-size:13px;opacity:.62}.doodle-close{width:40px;height:40px;border:0;border-radius:13px;background:rgba(255,255,255,.08);color:#fff;font-size:23px;cursor:pointer}
+.doodle-status{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}.doodle-role,.doodle-timer{padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.07);font-size:13px;font-weight:800}.doodle-timer{min-width:72px;text-align:center;background:rgba(255,75,175,.15);border:1px solid rgba(255,100,190,.22)}
+.doodle-word{margin-bottom:12px;padding:12px 15px;border-radius:15px;background:rgba(255,255,255,.055);text-align:center;font-weight:800;min-height:45px}.doodle-word span{opacity:.65;font-weight:600}
+.doodle-canvas-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:#fff;border:1px solid rgba(255,255,255,.12);touch-action:none}#doodleCanvas{display:block;width:100%;height:100%;cursor:crosshair;touch-action:none}
+.doodle-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}.doodle-tool{min-height:38px;padding:8px 12px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.065);color:#fff;cursor:pointer;font-weight:700}.doodle-tool:disabled{opacity:.35;cursor:not-allowed}.doodle-color{width:30px;height:30px;border-radius:50%;border:3px solid rgba(255,255,255,.25);cursor:pointer}.doodle-color.active{border-color:#fff;transform:scale(1.12)}.doodle-size{width:100px}
+.doodle-guess-area{display:flex;gap:8px;margin-top:12px}.doodle-guess-input{flex:1;min-width:0;height:44px;border:1px solid rgba(255,255,255,.1);border-radius:13px;background:rgba(255,255,255,.06);color:#fff;padding:0 13px;outline:none}.doodle-guess-input:focus{border-color:rgba(255,120,210,.6)}
+.doodle-scoreboard{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.doodle-score{padding:11px 13px;border-radius:14px;background:rgba(255,255,255,.055);font-size:13px}.doodle-score strong{display:block;font-size:17px;margin-top:3px}.doodle-message{margin-top:12px;padding:12px;border-radius:13px;background:rgba(255,255,255,.055);text-align:center;font-size:13px;min-height:43px}.doodle-start{width:100%;margin-top:12px}.doodle-spectator{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);color:#fff;font-weight:800;text-align:center;padding:20px;pointer-events:none}.doodle-spectator.hidden{display:none}
+@media(max-width:600px){.doodle-modal{padding:14px;border-radius:20px}.doodle-title{font-size:21px}.doodle-scoreboard{grid-template-columns:1fr}.doodle-guess-area{flex-direction:column}.doodle-guess-input{width:100%}}
+</style>
+<div class="modal-backdrop hidden" id="doodleModal">
+  <div class="doodle-modal">
+    <div class="doodle-head"><div><div class="doodle-title">🎨 Doodle</div><div class="doodle-sub">One draws. One guesses. Then switch roles.</div></div><button class="doodle-close" id="doodleClose" type="button">×</button></div>
+    <div class="doodle-status"><div class="doodle-role" id="doodleRole">Connecting…</div><div class="doodle-timer" id="doodleTimer">60s</div></div>
+    <div class="doodle-word" id="doodleWord">Waiting for the game…</div>
+    <div class="doodle-canvas-wrap"><canvas id="doodleCanvas"></canvas><div class="doodle-spectator hidden" id="doodleSpectator">Doodle is currently using the first two players.</div></div>
+    <div class="doodle-toolbar"><button class="doodle-tool" id="doodleClear" type="button">🗑 Clear</button><button class="doodle-tool" id="doodleUndo" type="button">↩ Undo</button><button class="doodle-tool doodle-done" id="doodleDone" type="button">✓ Done Drawing</button><span style="opacity:.5;font-size:12px">Brush:</span><button class="doodle-color active" data-doodle-color="#111111" style="background:#111111" type="button"></button><button class="doodle-color" data-doodle-color="#ff3b30" style="background:#ff3b30" type="button"></button><button class="doodle-color" data-doodle-color="#007aff" style="background:#007aff" type="button"></button><button class="doodle-color" data-doodle-color="#34c759" style="background:#34c759" type="button"></button><button class="doodle-color" data-doodle-color="#ff9500" style="background:#ff9500" type="button"></button><input class="doodle-size" id="doodleBrushSize" type="range" min="2" max="30" value="6"></div>
+    <div class="doodle-guess-area"><input class="doodle-guess-input" id="doodleGuessInput" type="text" autocomplete="off" placeholder="Type your guess…"><button class="modal-btn primary" id="doodleGuessButton" type="button">Guess</button></div>
+    <div class="doodle-scoreboard"><div class="doodle-score"><span id="doodlePlayer1Name">Player 1</span><strong id="doodlePlayer1Score">0</strong></div><div class="doodle-score"><span id="doodlePlayer2Name">Player 2</span><strong id="doodlePlayer2Score">0</strong></div></div>
+    <div class="doodle-message" id="doodleMessage">Waiting for two players…</div>
+    <div style="display:flex;gap:8px;margin-top:12px"><button class="modal-btn primary doodle-start" id="doodleStart" type="button">🎨 Start Doodle</button><button class="modal-btn" id="doodleNewGame" type="button" style="margin-top:12px;display:none">New Game</button></div>
+  </div>
+</div>
 
 <!-- TIC-TAC-TOE -->
 <div id="ticTacToeModal" class="modal-backdrop hidden">
@@ -3216,8 +2834,8 @@ function startRoomListeners(){
 
       if(command.clientId === clientId){ return; }
       if(command.sourceKey && sourceIdentity(canonicalSource) !== command.sourceKey){ return; }
-      lastRemotePlaybackCommand = command;
       if(!sourceReadyForRoom()){ pendingRemotePlayback=command; return; }
+      lastRemotePlaybackCommand = command;
       applyRemotePlayback(command);
 
     }
@@ -4412,377 +4030,226 @@ function sendPlayback(
   playing
 ){
 
-  if(
-    remoteApplying
-  ){
-
-    return;
-
-  }
-
-
-  if(!canControl()){
-
-    return;
-
-  }
-
-
-  if(!roomRef){
-
-    return;
-
-  }
-
-
-  const stamp =
-    Date.now() + serverTimeOffset;
-
-
-  lastLocalCommandStamp =
-    stamp;
-
-
-  roomRef
-    .child("playback")
-    .set({
-
-      action:
-        action,
-
-      time:
-        Number.isFinite(time)
-          ? time
-          : 0,
-
-      playing:
-        !!playing,
-
-      stamp:
-        stamp,
-
-      sourceKey:
-        sourceIdentity(canonicalSource),
-
-      clientId:
-        clientId
-
-    })
-    .catch(
-      function(error){
-
-        console.error(
-          "Playback sync error:",
-          error
-        );
-
-      }
-    );
-
-}
-
-
-/*
-  Apply a remote command.
-
-  If the local source is not ready, we store the command
-  and apply it once the video becomes ready.
-*/
-
-function applyRemotePlayback(
-  command
-){
-
-  if(!command){
-
-    return;
-
-  }
-
-
-  const stamp =
-    Number(command.stamp) || 0;
-
-
-  if(
-    stamp <=
-    lastProcessedPlaybackStamp
-  ){
-
-    return;
-
-  }
-
-
-  lastProcessedPlaybackStamp =
-    stamp;
-
-
   /*
-    If the source isn't ready yet, queue the command.
+    Playback is authoritative from the room host/admin.
+    Do NOT block this function merely because remoteApplying
+    is true: local seek operations intentionally set that flag
+    to prevent event races, but their command still must reach
+    the other device.
   */
+  if(!canControl() || !roomRef) return;
 
-  if(!mediaReadyForPlayback()){
+  const stamp = Date.now() + serverTimeOffset;
+  const safeTime = Number.isFinite(Number(time)) ? Number(time) : 0;
 
-    pendingRemotePlayback =
-      command;
+  lastLocalCommandStamp = stamp;
 
-    return;
-
-  }
-
-
-  executeRemotePlayback(
-    command
-  );
-
+  roomRef.child("playback").set({
+    action: action || "sync",
+    time: safeTime,
+    playing: !!playing,
+    stamp: stamp,
+    sourceKey: sourceIdentity(canonicalSource || currentSource),
+    clientId: clientId
+  }).catch(function(error){
+    console.error("Playback sync error:", error);
+  });
 }
 
+function applyRemotePlayback(command){
+  if(!command || command.clientId === clientId) return;
+
+  const stamp = Number(command.stamp) || 0;
+  if(stamp && stamp <= lastProcessedPlaybackStamp) return;
+  if(stamp) lastProcessedPlaybackStamp = stamp;
+
+  /* A source may still be loading. Keep the latest command queued. */
+  if(!mediaReadyForPlayback()){
+    pendingRemotePlayback = command;
+    lastRemotePlaybackCommand = command;
+    return;
+  }
+
+  lastRemotePlaybackCommand = command;
+  executeRemotePlayback(command);
+}
 
 function mediaReadyForPlayback(){
+  if(!currentSource) return false;
 
-  if(
-    !currentSource
-  ){
-
-    return false;
-
+  if(currentSource.type === "youtube"){
+    return !!youtubePlayer && !!youtubePlayerReady;
   }
 
-
   if(
-    currentSource.type ===
-    "youtube"
+    currentSource.type === "local" ||
+    currentSource.type === "remote" ||
+    currentSource.type === "drive" ||
+    currentSource.type === "p2p-local"
   ){
-
-    return(
-      !!youtubePlayer &&
-      youtubePlayerReady
-    );
-
-  }
-
-
-  if(currentSource.type === "local" || currentSource.type === "remote" || currentSource.type === "drive" || currentSource.type === "p2p-local"){
     return !!(localVideo.src || localVideo.srcObject) && localVideo.readyState >= 1;
   }
 
-
   return false;
-
 }
 
+function executeRemotePlayback(command){
 
-function executeRemotePlayback(
-  command
-){
+  if(!command || !currentSource) return;
 
-  const baseTime = Number(command.time) || 0;
   const shouldPlay = command.playing === true;
-  const commandStamp = Number(command.stamp) || 0;
-  const networkAge = commandStamp && shouldPlay
-    ? Math.max(0, (Date.now() + serverTimeOffset) - commandStamp) / 1000
+  const baseTime = Math.max(0, Number(command.time) || 0);
+  const stamp = Number(command.stamp) || 0;
+
+  /* Only advance the clock for PLAY commands. A pause command
+     must pause at the exact position sent by the admin. */
+  const elapsed = shouldPlay && stamp
+    ? Math.max(0, Date.now() + serverTimeOffset - stamp) / 1000
     : 0;
-  const time = Math.max(0, baseTime + Math.min(networkAge, 1.5));
 
+  const targetTime = baseTime + elapsed;
 
-  /*
-    Set the protection BEFORE changing media.
+  remoteApplying = true;
+  clearTimeout(remoteApplyTimer);
 
-    This prevents the resulting play/pause event from
-    being sent back to Firebase.
-  */
-
-  remoteApplying =
-    true;
-
-
-  clearTimeout(
-    remoteApplyTimer
-  );
-
-
-  if(
-    currentSource &&
-    currentSource.type ===
-      "youtube" &&
-    youtubePlayerReady &&
-    youtubePlayer
-  ){
-
-    try{
-
-      youtubePlayer.seekTo(
-        time,
-        true
-      );
-
+  try{
+    if(
+      currentSource.type === "youtube" &&
+      youtubePlayerReady &&
+      youtubePlayer
+    ){
+      youtubePlayer.seekTo(targetTime, true);
 
       if(shouldPlay){
-
         youtubePlayer.playVideo();
-
       }else{
-
         youtubePlayer.pauseVideo();
-
+      }
+    }
+    else if(
+      currentSource.type === "local" ||
+      currentSource.type === "remote" ||
+      currentSource.type === "drive" ||
+      currentSource.type === "p2p-local"
+    ){
+      if(!(localVideo.src || localVideo.srcObject)){
+        pendingRemotePlayback = command;
+        return;
       }
 
-    }catch(error){
+      try{
+        localVideo.currentTime = targetTime;
+      }catch(e){
+        console.warn("Remote seek failed:", e);
+      }
 
-      console.error(
-        "Remote YouTube playback error:",
-        error
-      );
-
+      if(shouldPlay){
+        const playPromise = localVideo.play();
+        if(playPromise && typeof playPromise.catch === "function"){
+          playPromise.catch(function(error){
+            console.warn("Remote play requires a user gesture:", error);
+          });
+        }
+      }else{
+        /* Explicitly force pause. This is the important fix for
+           the case where the partner continued playing. */
+        localVideo.pause();
+      }
     }
-
+  }catch(error){
+    console.error("Remote playback error:", error);
   }
 
-
-  else if(
-    currentSource &&
-    (currentSource.type === "local" || currentSource.type === "remote" || currentSource.type === "drive" || currentSource.type === "p2p-local") &&
-    (localVideo.src || localVideo.srcObject)
-  ){
-
-    try{
-
-      localVideo.currentTime =
-        time;
-
-    }catch(error){
-
-      console.warn(
-        "Could not seek local video:",
-        error
-      );
-
-    }
-
-
-    if(shouldPlay){
-
-      localVideo
-        .play()
-        .catch(
-          function(error){
-
-            console.warn(
-              "Remote play waiting for user interaction:",
-              error
-            );
-
-          }
-        );
-
-    }else{
-
-      localVideo.pause();
-
-    }
-
-  }
-
-
-  /*
-    Give the browser enough time to fire the media events.
-  */
-
-  remoteApplyTimer =
-    setTimeout(
-      function(){
-
-        remoteApplying =
-          false;
-
-      },
-      1200
-    );
-
+  /* Re-check the command after media events settle. */
+  remoteApplyTimer = setTimeout(function(){
+    remoteApplying = false;
+    playbackEnforceLatest();
+  }, 650);
 
   updatePlaybackUI();
-
 }
-
-
-/*
-  Apply a queued remote command once the local file
-  or YouTube player becomes ready.
-*/
 
 function applyPendingPlaybackWhenReady(){
+  if(!pendingRemotePlayback) return;
+  if(!sourceReadyForRoom() || !mediaReadyForPlayback()) return;
 
-  if(
-    !pendingRemotePlayback
-  ){
-
-    return;
-
-  }
-
-
-  if(!sourceReadyForRoom() || !mediaReadyForPlayback()){
-
-    return;
-
-  }
-
-
-  const command =
-    pendingRemotePlayback;
-
-
-  pendingRemotePlayback =
-    null;
-
-
-  executeRemotePlayback(
-    command
-  );
-
+  const command = pendingRemotePlayback;
+  pendingRemotePlayback = null;
+  lastRemotePlaybackCommand = command;
+  executeRemotePlayback(command);
 }
 
-
 /* =========================================================
-   CLOCK-BASED PLAYBACK DRIFT CORRECTION
+   STRONG PLAYBACK SYNCHRONIZATION
+   The admin's latest Firebase state remains authoritative.
 ========================================================= */
-clearInterval(playbackSyncTimer);
-playbackSyncTimer=setInterval(function(){
-  const c=lastRemotePlaybackCommand;
-  if(!c || !currentSource || c.playing!==true || !mediaReadyForPlayback() || remoteApplying) return;
+function playbackEnforceLatest(){
+  const command = lastRemotePlaybackCommand;
+  if(!command || !currentSource || !mediaReadyForPlayback()) return;
+  if(command.clientId === clientId) return;
+  if(remoteApplying) return;
 
-  const sent=Number(c.stamp)||0;
-  const expected=Math.max(0,Number(c.time)||0)+(sent?Math.max(0,(Date.now()+serverTimeOffset)-sent)/1000:0);
-  const actual=getCurrentTime();
-  const drift=expected-actual;
+  const shouldPlay = command.playing === true;
+  const stamp = Number(command.stamp) || 0;
+  const expected = Math.max(0,
+    (Number(command.time) || 0) +
+    (shouldPlay && stamp
+      ? Math.max(0, Date.now() + serverTimeOffset - stamp) / 1000
+      : 0)
+  );
+  const actual = getCurrentTime();
+  const drift = expected - actual;
 
-  /* Only correct visible drift. Small differences are left alone so the
-     browser/YouTube player is not constantly disturbed. */
-  if(Math.abs(drift)>0.65){
-    remoteApplying=true;
-    try{
-      if(currentSource.type==="youtube" && youtubePlayerReady && youtubePlayer){
-        youtubePlayer.seekTo(Math.max(0,expected),true);
-      }else if(localVideo && (localVideo.src||localVideo.srcObject)){
-        localVideo.currentTime=Math.max(0,expected);
+  try{
+    if(Math.abs(drift) > 0.55){
+      remoteApplying = true;
+      if(currentSource.type === "youtube" && youtubePlayerReady && youtubePlayer){
+        youtubePlayer.seekTo(expected, true);
+        if(shouldPlay) youtubePlayer.playVideo();
+        else youtubePlayer.pauseVideo();
+      }else{
+        localVideo.currentTime = expected;
+        if(shouldPlay){
+          const pp = localVideo.play();
+          if(pp && pp.catch) pp.catch(function(){});
+        }else{
+          localVideo.pause();
+        }
       }
-    }catch(e){}
-    clearTimeout(remoteApplyTimer);
-    remoteApplyTimer=setTimeout(function(){remoteApplying=false;},450);
+      clearTimeout(remoteApplyTimer);
+      remoteApplyTimer = setTimeout(function(){remoteApplying=false;},450);
+    }else{
+      const actuallyPlaying = isMediaPlaying();
+      if(shouldPlay && !actuallyPlaying){
+        remoteApplying = true;
+        if(currentSource.type === "youtube" && youtubePlayerReady && youtubePlayer){
+          youtubePlayer.playVideo();
+        }else{
+          const pp = localVideo.play();
+          if(pp && pp.catch) pp.catch(function(){});
+        }
+        clearTimeout(remoteApplyTimer);
+        remoteApplyTimer = setTimeout(function(){remoteApplying=false;},450);
+      }else if(!shouldPlay && actuallyPlaying){
+        remoteApplying = true;
+        if(currentSource.type === "youtube" && youtubePlayerReady && youtubePlayer){
+          youtubePlayer.pauseVideo();
+        }else{
+          localVideo.pause();
+        }
+        clearTimeout(remoteApplyTimer);
+        remoteApplyTimer = setTimeout(function(){remoteApplying=false;},450);
+      }
+    }
+  }catch(e){
+    console.warn("Playback enforcement failed:", e);
   }
-},1000);
+}
 
-let playbackHeartbeatTimer=null;
-clearInterval(playbackHeartbeatTimer);
-playbackHeartbeatTimer=setInterval(function(){
-  if(!canControl() || !currentSource || remoteApplying || !isMediaPlaying()) return;
-  const now=getCurrentTime();
-  if(!Number.isFinite(now)) return;
-  sendPlayback("sync",now,true);
-},3000);
-
-
+clearInterval(playbackSyncTimer);
+playbackSyncTimer = setInterval(function(){
+  playbackEnforceLatest();
+}, 700);
 
 /* =========================================================
    LOCAL VIDEO EVENTS
@@ -5091,14 +4558,6 @@ function seekRelative(
     isMediaPlaying();
 
 
-  /* Publish the seek first. If remoteApplying is enabled before
-     sendPlayback(), the sync writer intentionally ignores the command. */
-  sendPlayback(
-    "seek",
-    target,
-    playing
-  );
-
   remoteApplying =
     true;
 
@@ -5152,6 +4611,13 @@ function seekRelative(
     );
 
 
+  sendPlayback(
+    "seek",
+    target,
+    playing
+  );
+
+
   updatePlaybackUI();
 
 }
@@ -5203,14 +4669,13 @@ function commitProgressSeek(){
   if(!duration||!Number.isFinite(duration))return;
   const target=duration*(Number(progress.value)/100);
   const playing=isMediaPlaying();
-  /* Publish before remoteApplying so the sync command is not suppressed. */
-  sendPlayback("seek",target,playing);
   remoteApplying=true;
   clearTimeout(remoteApplyTimer);
   if(currentSource.type==="youtube"&&youtubePlayerReady&&youtubePlayer){try{youtubePlayer.seekTo(target,true);}catch(e){}}
   else if((currentSource.type==="local"||currentSource.type==="remote"||currentSource.type==="p2p-local")&&(localVideo.src||localVideo.srcObject)){try{localVideo.currentTime=target;}catch(e){}}
   clearTimeout(seekSyncTimer);
   seekSyncTimer=setTimeout(function(){remoteApplying=false;},500);
+  sendPlayback("seek",target,playing);
   updatePlaybackUI();
 }
 progress.addEventListener("input",function(){
@@ -7030,15 +6495,15 @@ if(gameCenterOverlay){
             return;
           }
 
-          if(game === "chess"){
-            closeGameCenter();
-            startChess();
-            return;
-          }
-
           if(game === "connect-four"){
             closeGameCenter();
             startConnectFour();
+            return;
+          }
+
+          if(game === "doodle"){
+            closeGameCenter();
+            startDoodle();
             return;
           }
 
@@ -7116,6 +6581,13 @@ document.addEventListener(
       !cqModal.classList.contains("hidden")
     ){
       closeCoupleQuiz();
+    }
+    if(
+      event.key === "Escape" &&
+      doodleModal &&
+      !doodleModal.classList.contains("hidden")
+    ){
+      closeDoodle();
     }
   }
 );
@@ -7892,34 +7364,54 @@ async function quickRestart(){if(!quickRef)return;const players=(await quickRef.
 async function startQuickGame(key){if(!roomRef){showToast("Join a room first.");return;}quickKey=key;clearTimeout(quickTimer);qgo.classList.remove("hidden");document.body.style.overflow="hidden";quickRef=roomRef.child("games/quick/"+key);try{let snap=await quickRef.once("value");if(!snap.exists())await quickRef.set(quickDefault(key));await quickEnsurePlayer();if(quickListener)quickRef.off("value",quickListener);quickListener=s=>{quickState=s.val()||quickDefault(key);quickRender();};quickRef.on("value",quickListener);}catch(e){console.error(e);showToast("Could not open this game.");}}
 function closeQuickGame(){clearTimeout(quickTimer);if(quickRef&&quickListener)quickRef.off("value",quickListener);quickRef=null;quickListener=null;quickState=null;quickKey="";qgo.classList.add("hidden");document.body.style.overflow="";}
 document.getElementById("quickGameClose")?.addEventListener("click",closeQuickGame);qnext?.addEventListener("click",quickNext);qrestart?.addEventListener("click",quickRestart);</script>
-
 <script>
 /* =========================================================
-   PURLO 3D UI MODE SWITCHER — VISUAL ONLY
-   Reads the existing mode text/selection and adds a CSS class.
-   It does not change Firebase, playback, games, or room logic.
+   PURLO DOODLE — REAL-TIME TWO PLAYER GAME
 ========================================================= */
-(function(){
-  function setVisualMode(){
-    const pill=document.getElementById("modePill");
-    const couple=document.getElementById("startCoupleMode");
-    const group=document.getElementById("startGroupMode");
-    const text=(pill?.textContent||"").toLowerCase();
-    document.body.classList.toggle("purlo-group", text.includes("group"));
-    document.body.classList.toggle("purlo-couple", !text.includes("group"));
-    if(!pill && group?.classList.contains("selected")){
-      document.body.classList.add("purlo-group");
-      document.body.classList.remove("purlo-couple");
-    }
-  }
-  setVisualMode();
-  const pill=document.getElementById("modePill");
-  if(pill){new MutationObserver(setVisualMode).observe(pill,{childList:true,characterData:true,subtree:true});}
-  const couple=document.getElementById("startCoupleMode");
-  const group=document.getElementById("startGroupMode");
-  [couple,group].forEach(el=>el&&new MutationObserver(setVisualMode).observe(el,{attributes:true,attributeFilter:["class"]}));
-})();
-</script>
+const DOODLE_WORDS=["Apple","Bicycle","Pizza","Rocket","Dog","Beach","Umbrella","Guitar","Elephant","Rainbow","Camera","Burger","Moon","Robot","Ice Cream","Tree","Airplane","Sunglasses","Football","Cake","House","Car","Fish","Flower","Cat","Sun","Star","Coffee","Laptop","Balloon"];
+let doodleModal=null,doodleRef=null,doodleListener=null,doodleState=null,doodleTimer=null,doodleCanvas=null,doodleCtx=null,doodleDrawing=false,doodleCurrentStroke=[],doodleColor="#111111",doodleBrushSize=6;
+function doodleDefaultState(){return{players:{},scores:{},phase:"waiting",drawerId:"",guesserId:"",word:"",round:0,startedAt:0,drawEndsAt:0,guessEndsAt:0,strokes:{},result:"",winner:"",updatedAt:0};}
+function doodlePlayers(){return Object.entries(doodleState?.players||{}).filter(([,p])=>p&&p.role!=="spectator").sort((a,b)=>Number(a[1].joinedAt||0)-Number(b[1].joinedAt||0)).slice(0,2);}
+function doodleIsPlayer(){return doodlePlayers().some(([id])=>id===clientId);}
+function doodleMyRole(){if(!doodleState)return"spectator";if(doodleState.drawerId===clientId)return"drawer";if(doodleState.guesserId===clientId)return"guesser";return"spectator";}
+async function doodleEnsurePlayer(){if(!doodleRef||!clientId)return;const ref=doodleRef.child("players");const snap=await ref.once("value"),players=snap.val()||{};if(players[clientId]){ref.child(clientId).onDisconnect().remove();return;}const active=Object.entries(players).filter(([,p])=>p&&p.role!=="spectator");const role=active.length<2?"player":"spectator";await ref.child(clientId).set({name:myName||"Player",role,joinedAt:firebase.database.ServerValue.TIMESTAMP});ref.child(clientId).onDisconnect().remove();}
+function doodleResizeCanvas(){if(!doodleCanvas||!doodleCtx)return;const r=doodleCanvas.getBoundingClientRect(),ratio=window.devicePixelRatio||1;doodleCanvas.width=Math.max(1,Math.round(r.width*ratio));doodleCanvas.height=Math.max(1,Math.round(r.height*ratio));doodleCtx.setTransform(ratio,0,0,ratio,0,0);doodleCtx.lineCap="round";doodleCtx.lineJoin="round";doodleRenderCanvas();}
+function doodleClearCanvas(){if(!doodleCanvas||!doodleCtx)return;const r=doodleCanvas.getBoundingClientRect();doodleCtx.clearRect(0,0,r.width,r.height);}
+function doodleDrawStroke(points,color,size){if(!doodleCtx||!points?.length)return;doodleCtx.beginPath();doodleCtx.strokeStyle=color;doodleCtx.lineWidth=size;doodleCtx.lineCap="round";doodleCtx.lineJoin="round";const f=points[0];doodleCtx.moveTo(f.x*doodleCanvas.clientWidth,f.y*doodleCanvas.clientHeight);for(let i=1;i<points.length;i++){const p=points[i];doodleCtx.lineTo(p.x*doodleCanvas.clientWidth,p.y*doodleCanvas.clientHeight);}if(points.length===1)doodleCtx.lineTo(f.x*doodleCanvas.clientWidth+.1,f.y*doodleCanvas.clientHeight+.1);doodleCtx.stroke();}
+function doodleRenderCanvas(){if(!doodleCanvas||!doodleCtx)return;doodleClearCanvas();Object.values(doodleState?.strokes||{}).forEach(st=>{if(st?.points?.length)doodleDrawStroke(st.points,st.color||"#111",Number(st.size||6));});}
+function doodlePointerPosition(e){const r=doodleCanvas.getBoundingClientRect();return{x:Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),y:Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))};}
+function doodleStartDraw(e){if(doodleMyRole()!=="drawer"||doodleState?.phase!=="drawing")return;doodleDrawing=true;doodleCurrentStroke=[doodlePointerPosition(e)];doodleCanvas.setPointerCapture?.(e.pointerId);doodleDrawStroke(doodleCurrentStroke,doodleColor,doodleBrushSize);}
+function doodleMoveDraw(e){if(!doodleDrawing)return;doodleCurrentStroke.push(doodlePointerPosition(e));doodleDrawStroke(doodleCurrentStroke,doodleColor,doodleBrushSize);}
+async function doodleEndDraw(){if(!doodleDrawing)return;doodleDrawing=false;if(doodleCurrentStroke.length&&doodleRef&&doodleMyRole()==="drawer"){const key=doodleRef.child("strokes").push().key;await doodleRef.child("strokes").child(key).set({points:doodleCurrentStroke,color:doodleColor,size:doodleBrushSize,by:clientId,at:firebase.database.ServerValue.TIMESTAMP});}doodleCurrentStroke=[];}
+async function doodleClear(){if(!doodleRef||doodleMyRole()!=="drawer"||doodleState?.phase!=="drawing")return;await doodleRef.child("strokes").remove();}
+async function doodleUndo(){if(!doodleRef||doodleMyRole()!=="drawer"||doodleState?.phase!=="drawing")return;const mine=Object.entries(doodleState?.strokes||{}).filter(([,s])=>s?.by===clientId).sort((a,b)=>Number(a[1].at||0)-Number(b[1].at||0));if(mine.length)await doodleRef.child("strokes").child(mine[mine.length-1][0]).remove();}
+function doodlePickWord(previous){let word="";for(let i=0;i<10&&word===previous;i++)word=DOODLE_WORDS[Math.floor(Math.random()*DOODLE_WORDS.length)];return word||DOODLE_WORDS[Math.floor(Math.random()*DOODLE_WORDS.length)];}
+async function doodleStartRound(){if(!doodleRef||hostId!==clientId)return;const players=doodlePlayers();if(players.length<2){showToast("Doodle needs two players.");return;}const prev=doodleState||doodleDefaultState(),p1=players[0][0],p2=players[1][0],drawerId=prev.drawerId?(prev.drawerId===p1?p2:p1):p1,guesserId=drawerId===p1?p2:p1,now=Date.now(),scores={...(prev.scores||{})};players.forEach(([id])=>{if(scores[id]==null)scores[id]=0;});await doodleRef.update({players:prev.players||{},scores,phase:"drawing",drawerId,guesserId,word:doodlePickWord(prev.word),round:Number(prev.round||0)+1,startedAt:now,drawEndsAt:now+60000,guessEndsAt:now+90000,strokes:{},result:"",winner:"",updatedAt:firebase.database.ServerValue.TIMESTAMP});}
+async function doodleStartGame(){if(!doodleRef||hostId!==clientId){showToast("Only the room admin can start Doodle.");return;}const players=doodlePlayers();if(players.length<2){showToast("Doodle needs two players in this room.");return;}const scores={};players.forEach(([id])=>scores[id]=0);await doodleRef.set({...doodleDefaultState(),players:doodleState?.players||{},scores,updatedAt:firebase.database.ServerValue.TIMESTAMP});await doodleStartRound();}
+async function doodleNewGame(){if(!doodleRef||hostId!==clientId){showToast("Only the room admin can start a new Doodle game.");return;}const players=(await doodleRef.child("players").once("value")).val()||{};const scores={};Object.entries(players).filter(([,p])=>p?.role!=="spectator").slice(0,2).forEach(([id])=>scores[id]=0);await doodleRef.set({...doodleDefaultState(),players,scores,updatedAt:firebase.database.ServerValue.TIMESTAMP});await doodleStartRound();}
+async function doodleDoneDrawing(){
+  if(!doodleRef || !doodleState) return;
+  if(doodleMyRole() !== "drawer" || doodleState.phase !== "drawing") return;
 
+  await doodleRef.transaction(function(st){
+    if(!st || st.phase !== "drawing") return st;
+
+    /* End drawing immediately and give the guesser a fresh 30 seconds. */
+    st.phase = "guessing";
+    st.guessEndsAt = Date.now() + 30000;
+    st.result = "";
+    st.winner = "";
+    st.updatedAt = Date.now();
+    return st;
+  });
+}
+
+async function doodleSubmitGuess(){if(!doodleRef||doodleMyRole()!=="guesser"||doodleState?.phase!=="guessing")return;const input=document.getElementById("doodleGuessInput"),guess=input?.value.trim();if(!guess)return;input.value="";const actual=String(doodleState.word||"").trim().toLowerCase(),normalized=guess.toLowerCase();if(normalized===actual){const scores={...(doodleState.scores||{})};scores[doodleState.drawerId]=Number(scores[doodleState.drawerId]||0)+1;scores[doodleState.guesserId]=Number(scores[doodleState.guesserId]||0)+1;await doodleRef.transaction(st=>{if(!st||st.phase!=="guessing")return st;st.phase="roundEnd";st.result=(st.players?.[clientId]?.name||myName||"Player")+" guessed correctly! 🎉";st.winner=clientId;st.scores=scores;st.updatedAt=Date.now();return st;});}else{showToast("Not quite — try again!");}}
+async function doodleTick(){if(!doodleState||!doodleRef)return;const now=Date.now();if(doodleState.phase==="drawing"&&now>=Number(doodleState.drawEndsAt||0)&&hostId===clientId){await doodleRef.transaction(st=>{if(!st||st.phase!=="drawing")return st;st.phase="guessing";st.updatedAt=Date.now();return st;});}else if(doodleState.phase==="guessing"&&now>=Number(doodleState.guessEndsAt||0)&&hostId===clientId){await doodleRef.transaction(st=>{if(!st||st.phase!=="guessing")return st;st.phase="roundEnd";st.result="Time's up! ⏰ The word was "+st.word+".";st.winner="";st.updatedAt=Date.now();return st;});}else if(doodleState.phase==="roundEnd"&&hostId===clientId&&Number(doodleState.updatedAt||0)&&now-Number(doodleState.updatedAt)>=3000){await doodleStartRound();}}
+function doodleRender(){if(!doodleModal||doodleModal.classList.contains("hidden")||!doodleState)return;const players=doodlePlayers(),role=doodleMyRole(),roleEl=document.getElementById("doodleRole"),timerEl=document.getElementById("doodleTimer"),wordEl=document.getElementById("doodleWord"),messageEl=document.getElementById("doodleMessage"),startEl=document.getElementById("doodleStart"),newEl=document.getElementById("doodleNewGame"),input=document.getElementById("doodleGuessInput"),guessBtn=document.getElementById("doodleGuessButton"),clearBtn=document.getElementById("doodleClear"),undoBtn=document.getElementById("doodleUndo"),doneBtn=document.getElementById("doodleDone"),spectator=document.getElementById("doodleSpectator");players.forEach(([id,p],i)=>{const n=document.getElementById(i===0?"doodlePlayer1Name":"doodlePlayer2Name"),sc=document.getElementById(i===0?"doodlePlayer1Score":"doodlePlayer2Score");if(n)n.textContent=(p.name||"Player")+(id===clientId?" (You)":"");if(sc)sc.textContent=Number(doodleState.scores?.[id]||0);});if(players.length<2){roleEl.textContent="Waiting for another player";wordEl.innerHTML="<span>Invite your partner to this room.</span>";messageEl.textContent="Doodle requires two active players.";startEl.style.display="block";startEl.disabled=true;newEl.style.display="none";return;}const isSpec=!doodleIsPlayer();spectator.classList.toggle("hidden",!isSpec);roleEl.textContent=isSpec?"👀 Spectator":role==="drawer"?"✏️ You are drawing":"🔎 You are guessing";if(role==="drawer")wordEl.innerHTML="Your word: <strong>"+escapeHtml(doodleState.word||"—")+"</strong>";else if(doodleState.phase==="drawing")wordEl.innerHTML="<span>🎨 Watch the drawing and wait for the guessing phase.</span>";else if(doodleState.phase==="guessing")wordEl.innerHTML="<span>🔎 Guess the word!</span>";else wordEl.innerHTML="<span>Round word: "+escapeHtml(doodleState.word||"")+"</span>";let seconds=0;if(doodleState.phase==="drawing")seconds=Math.max(0,Math.ceil((Number(doodleState.drawEndsAt)-Date.now())/1000));else if(doodleState.phase==="guessing")seconds=Math.max(0,Math.ceil((Number(doodleState.guessEndsAt)-Date.now())/1000));timerEl.textContent=doodleState.phase==="roundEnd"?"DONE":doodleState.phase==="waiting"?"—":seconds+"s";const canDraw=role==="drawer"&&doodleState.phase==="drawing",canGuess=role==="guesser"&&doodleState.phase==="guessing";clearBtn.disabled=!canDraw;undoBtn.disabled=!canDraw;doneBtn.disabled=!canDraw;doneBtn.style.display=canDraw?"inline-flex":"none";input.disabled=!canGuess;guessBtn.disabled=!canGuess;if(doodleState.phase==="drawing")messageEl.textContent=role==="drawer"?"Draw the word, then press ✓ Done Drawing when you finish! ✏️":"Watch carefully — the drawing phase is active.";else if(doodleState.phase==="guessing")messageEl.textContent=role==="guesser"?"You have 30 seconds to guess! 🔎":"Your partner is guessing your drawing.";else if(doodleState.phase==="roundEnd")messageEl.textContent=doodleState.result||"Round finished.";else messageEl.textContent="Get ready…";startEl.style.display=doodleState.phase==="waiting"?"block":"none";startEl.disabled=hostId!==clientId||players.length<2;newEl.style.display=doodleState.phase!=="waiting"?"block":"none";newEl.disabled=hostId!==clientId;doodleRenderCanvas();}
+async function startDoodle(){if(!roomRef){showToast("Join a room first.");return;}doodleModal=document.getElementById("doodleModal");doodleModal.classList.remove("hidden");document.body.style.overflow="hidden";doodleCanvas=document.getElementById("doodleCanvas");doodleCtx=doodleCanvas.getContext("2d");doodleResizeCanvas();doodleRef=roomRef.child("games/doodle");try{const snap=await doodleRef.once("value");if(!snap.exists())await doodleRef.set(doodleDefaultState());await doodleEnsurePlayer();if(doodleListener)doodleRef.off("value",doodleListener);doodleListener=s=>{doodleState=s.val()||doodleDefaultState();doodleRender();};doodleRef.on("value",doodleListener);doodleState=(await doodleRef.once("value")).val()||doodleDefaultState();doodleRender();clearInterval(doodleTimer);doodleTimer=setInterval(async()=>{doodleRender();await doodleTick();},500);}catch(e){console.error("Doodle:",e);showToast("Could not open Doodle.");}}
+function closeDoodle(){clearInterval(doodleTimer);doodleTimer=null;if(doodleRef&&doodleListener)doodleRef.off("value",doodleListener);doodleRef=null;doodleListener=null;doodleState=null;if(doodleModal)doodleModal.classList.add("hidden");document.body.style.overflow="";}
+document.getElementById("doodleClose")?.addEventListener("click",closeDoodle);document.getElementById("doodleStart")?.addEventListener("click",doodleStartGame);document.getElementById("doodleNewGame")?.addEventListener("click",doodleNewGame);document.getElementById("doodleClear")?.addEventListener("click",doodleClear);document.getElementById("doodleUndo")?.addEventListener("click",doodleUndo);document.getElementById("doodleDone")?.addEventListener("click",doodleDoneDrawing);document.getElementById("doodleGuessButton")?.addEventListener("click",doodleSubmitGuess);document.getElementById("doodleGuessInput")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();doodleSubmitGuess();}});document.querySelectorAll(".doodle-color").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".doodle-color").forEach(x=>x.classList.remove("active"));b.classList.add("active");doodleColor=b.dataset.doodleColor;}));document.getElementById("doodleBrushSize")?.addEventListener("input",e=>doodleBrushSize=Number(e.target.value)||6);document.getElementById("doodleCanvas")?.addEventListener("pointerdown",doodleStartDraw);document.getElementById("doodleCanvas")?.addEventListener("pointermove",doodleMoveDraw);document.getElementById("doodleCanvas")?.addEventListener("pointerup",doodleEndDraw);document.getElementById("doodleCanvas")?.addEventListener("pointercancel",doodleEndDraw);window.addEventListener("resize",()=>{if(doodleModal&&!doodleModal.classList.contains("hidden"))doodleResizeCanvas();});document.getElementById("doodleModal")?.addEventListener("click",e=>{if(e.target===e.currentTarget)closeDoodle();});
+</script>
 </body>
 </html>
