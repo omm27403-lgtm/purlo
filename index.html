@@ -1197,10 +1197,10 @@ button{
 </style>
 
 <style id="walkieTalkieStyles">
-.walkie-widget{position:fixed;right:16px;bottom:16px;z-index:10050;width:66px;height:66px;padding:6px;border:1px solid rgba(255,255,255,.16);border-radius:22px;background:rgba(15,12,24,.82);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 18px 55px rgba(0,0,0,.45);display:none;gap:10px;align-items:center;overflow:visible;transition:.22s ease}
-.walkie-widget.show{display:flex}.walkie-widget.expanded{width:min(310px,calc(100vw - 24px));height:auto;padding:12px}.walkie-widget.expanded .walkie-info{display:block}.walkie-widget:not(.expanded) .walkie-info,.walkie-widget:not(.expanded) .walkie-close{display:none}.walkie-orb{cursor:pointer;width:48px;height:48px;flex:0 0 48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#ff4f9a,#8b5cf6);box-shadow:0 7px 0 rgba(73,35,115,.45),0 0 24px rgba(255,79,154,.25);font-size:22px}.walkie-info{min-width:0;flex:1}.walkie-title{font-weight:900;font-size:13px}.walkie-status{font-size:11px;opacity:.62;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.walkie-talk{width:58px;height:58px;border:0;border-radius:18px;background:rgba(255,255,255,.09);color:#fff;font-size:24px;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 5px 15px rgba(0,0,0,.2)}.walkie-talk.active{background:linear-gradient(145deg,#ff4f9a,#8b5cf6);transform:scale(1.05);box-shadow:0 0 0 5px rgba(255,79,154,.16),0 8px 24px rgba(139,92,246,.35)}.walkie-widget .walkie-close{position:absolute;right:7px;top:5px;border:0;background:transparent;color:#fff;opacity:.45;font-size:15px;cursor:pointer}.walkie-speaking{animation:walkiePulse 1s ease-in-out infinite}.walkie-peer{font-size:10px;opacity:.5;margin-top:3px}.walkie-audio{display:none}
+.walkie-widget{position:fixed;right:18px;left:auto;bottom:max(78px,calc(env(safe-area-inset-bottom) + 78px));z-index:10050;width:66px;height:66px;padding:6px;border:1px solid rgba(255,255,255,.16);border-radius:22px;background:rgba(15,12,24,.82);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 18px 55px rgba(0,0,0,.45);display:none;gap:10px;align-items:center;overflow:visible;transition:.22s ease}
+.walkie-widget.show{display:flex}.walkie-widget.expanded{width:min(310px,calc(100vw - 24px));height:auto;padding:12px}.walkie-widget.expanded .walkie-info{display:block}.walkie-widget:not(.expanded) .walkie-info,.walkie-widget:not(.expanded) .walkie-close{display:none}.walkie-orb{cursor:pointer;width:48px;height:48px;flex:0 0 48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#ff4f9a,#8b5cf6);box-shadow:0 7px 0 rgba(73,35,115,.45),0 0 24px rgba(255,79,154,.25);font-size:22px}.walkie-info{min-width:0;flex:1}.walkie-title{font-weight:900;font-size:13px}.walkie-status{font-size:11px;opacity:.62;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.walkie-talk{width:58px;height:58px;border:0;border-radius:18px;background:rgba(255,255,255,.09);color:#fff;font-size:24px;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 5px 15px rgba(0,0,0,.2)}.walkie-talk.active{background:linear-gradient(145deg,#ff4f9a,#8b5cf6);transform:scale(1.05);box-shadow:0 0 0 5px rgba(255,79,154,.16),0 8px 24px rgba(139,92,246,.35)}.walkie-widget .walkie-close{display:none!important}.walkie-widget .walkie-info{pointer-events:none}.walkie-speaking{animation:walkiePulse 1s ease-in-out infinite}.walkie-peer{font-size:10px;opacity:.5;margin-top:3px}.walkie-audio{display:none}
 @keyframes walkiePulse{50%{box-shadow:0 0 0 8px rgba(255,79,154,.12),0 0 30px rgba(255,79,154,.45)}}
-@media(max-width:600px){.walkie-widget{right:10px;bottom:max(10px,env(safe-area-inset-bottom));width:62px;height:62px;padding:6px}.walkie-widget.expanded{width:calc(100vw - 20px);height:auto;padding:10px}.walkie-orb{width:43px;height:43px;flex-basis:43px}.walkie-talk{width:54px;height:54px}}
+@media(max-width:600px){.walkie-widget{right:12px;left:auto;bottom:max(74px,calc(env(safe-area-inset-bottom) + 74px));width:62px;height:62px;padding:6px}.walkie-widget.expanded{width:calc(100vw - 20px);height:auto;padding:10px}.walkie-orb{width:43px;height:43px;flex-basis:43px}.walkie-talk{width:54px;height:54px}}
 </style>
 </head>
 
@@ -2238,6 +2238,13 @@ let chessSelectedSquare = null;
    YOUTUBE API READY
 ========================================================= */
 
+function ensureYouTubeAPI(){
+  if(window.YT && typeof YT.Player === "function"){ youtubeAPIReady=true; return true; }
+  let script=document.querySelector("script[src=\"https://www.youtube.com/iframe_api\"]");
+  if(!script){ script=document.createElement("script"); script.src="https://www.youtube.com/iframe_api"; script.async=true; document.head.appendChild(script); }
+  return false;
+}
+
 window.onYouTubeIframeAPIReady =
   function(){
 
@@ -2342,103 +2349,29 @@ function formatTime(seconds){
 }
 
 
-function getYouTubeId(url){
-
-  if(!url){
-    return null;
-  }
-
-  url =
-    url.trim();
-
+function getYouTubeId(input){
+  if(!input) return null;
+  let url=String(input).trim();
+  if(!url) return null;
+  if(!/^https?:\/\//i.test(url)) url='https://'+url;
   try{
-
-    const parsed =
-      new URL(url);
-
-
-    if(
-      parsed.hostname.includes(
-        "youtube.com"
-      )
-    ){
-
-      const v =
-        parsed.searchParams.get(
-          "v"
-        );
-
-      if(v){
-        return v;
-      }
-
-
-      const parts =
-        parsed.pathname.split("/");
-
-
-      const index =
-        parts.indexOf(
-          "shorts"
-        );
-
-
-      if(
-        index >= 0 &&
-        parts[index + 1]
-      ){
-
-        return parts[index + 1];
-
-      }
-
-
-      const embedIndex =
-        parts.indexOf(
-          "embed"
-        );
-
-
-      if(
-        embedIndex >= 0 &&
-        parts[embedIndex + 1]
-      ){
-
-        return parts[
-          embedIndex + 1
-        ];
-
-      }
-
+    const u=new URL(url);
+    const host=u.hostname.toLowerCase().replace(/^www\./,'').replace(/^m\./,'');
+    let id=null;
+    if(host==='youtu.be') id=u.pathname.split('/').filter(Boolean)[0]||null;
+    else if(host==='youtube.com' || host.endsWith('.youtube.com')){
+      id=u.searchParams.get('v') || null;
+      const parts=u.pathname.split('/').filter(Boolean);
+      if(!id && (parts[0]==='shorts' || parts[0]==='embed' || parts[0]==='live')) id=parts[1]||null;
     }
-
-
-    if(
-      parsed.hostname ===
-      "youtu.be"
-    ){
-
-      return parsed.pathname
-        .replace("/","")
-        .split("/")[0];
-
+    if(id){
+      id=id.split(/[?&#]/)[0].trim();
+      return /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null;
     }
-
-  }catch(error){}
-
-
-  const match =
-    url.match(
-      /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/
-    );
-
-
-  return match
-    ? match[1]
-    : null;
-
+  }catch(e){}
+  const m=url.match(/(?:v=|youtu\.be\/|youtube\.com\/(?:shorts\/|embed\/|live\/))([A-Za-z0-9_-]{11})/i);
+  return m?m[1]:null;
 }
-
 
 function makeRoomCode(){
 
@@ -2776,19 +2709,44 @@ function walkieParticipantCount(){
   return c ? Number(c.textContent)||0 : Object.keys(walkieState.players||{}).length;
 }
 
+async function walkieRenegotiate(peerId,pc){
+  if(!pc || pc.connectionState === "closed") return;
+  try{
+    if(pc.signalingState !== "stable") return;
+    const offer=await pc.createOffer({offerToReceiveAudio:true});
+    await pc.setLocalDescription(offer);
+    await walkiePeerRef(peerId)?.update({offer:{type:offer.type,sdp:offer.sdp},updatedAt:firebase.database.ServerValue.TIMESTAMP});
+  }catch(e){console.warn("Walkie renegotiation failed",e);}
+}
+
 async function walkieGetMic(){
   if(walkieStream && walkieStream.getTracks().some(t=>t.readyState==="live")) return walkieStream;
   if(!navigator.mediaDevices?.getUserMedia) throw new Error("Microphone is not supported by this browser.");
   walkieStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1},video:false});
-  walkieStream.getAudioTracks().forEach(t=>t.enabled=false);
-  Object.values(walkiePeers).forEach(pc=>walkieAttachStream(pc));
+  const track=walkieStream.getAudioTracks()[0];
+  if(track) track.enabled=false;
+  await Promise.all(Object.entries(walkiePeers).map(async ([peerId,pc])=>{
+    try{
+      const sender=pc.getSenders().find(x=>x.track?.kind==="audio") || pc._walkieAudioSender;
+      if(sender && track) await sender.replaceTrack(track);
+      else if(track) walkieAttachStream(pc);
+      await walkieRenegotiate(peerId,pc);
+    }catch(e){console.warn("Walkie track attach failed",e);}
+  }));
   return walkieStream;
 }
+
 function walkieAttachStream(pc){
-  if(!walkieStream||pc.getSenders().some(s=>s.track&&s.track.kind==="audio")) return;
+  if(!pc||!walkieStream)return;
   const track=walkieStream.getAudioTracks()[0];
-  if(track)pc.addTrack(track,walkieStream);
+  if(!track)return;
+  try{
+    const sender=pc.getSenders().find(s=>s.track?.kind==="audio") || pc._walkieAudioSender;
+    if(sender){ sender.replaceTrack(track); pc._walkieAudioSender=sender; return; }
+    pc._walkieAudioSender=pc.addTrack(track,walkieStream);
+  }catch(e){console.warn("Walkie attach stream failed",e);}
 }
+
 function walkieCreatePeer(peerId,initiator){
   if(!peerId||peerId===clientId)return null;
   if(walkiePeers[peerId])return walkiePeers[peerId];
@@ -2798,19 +2756,23 @@ function walkieCreatePeer(peerId,initiator){
   ]});
   walkiePeers[peerId]=pc;
   walkiePendingCandidates[peerId]=[];
+  /* Create the audio m-line BEFORE the first offer. This is important on
+     phones: the microphone can be acquired later without renegotiating. */
+  try{ pc._walkieAudioTransceiver=pc.addTransceiver("audio",{direction:"sendrecv"}); pc._walkieAudioSender=pc._walkieAudioTransceiver.sender; }catch(e){}
   if(walkieStream)walkieAttachStream(pc);
   pc.onicecandidate=e=>{if(e.candidate)walkiePeerRef(peerId)?.child("candidates").push(e.candidate.toJSON()).catch(()=>{});};
   pc.ontrack=e=>{
     let audio=document.getElementById("walkieAudio-"+peerId);
-    if(!audio){audio=document.createElement("audio");audio.id="walkieAudio-"+peerId;audio.autoplay=true;audio.playsInline=true;audio.className="walkie-audio";document.body.appendChild(audio);}
-    audio.srcObject=e.streams[0];
-    const play=audio.play(); if(play?.catch)play.catch(()=>{});
+    if(!audio){audio=document.createElement("audio");audio.id="walkieAudio-"+peerId;audio.autoplay=true;audio.playsInline=true;audio.setAttribute("playsinline","");audio.className="walkie-audio";audio.volume=1;document.body.appendChild(audio);}
+    if(e.streams&&e.streams[0]) audio.srcObject=e.streams[0];
+    /* The first talk-button press also unlocks these audio elements. */
+    const play=audio.play(); if(play?.catch)play.catch(()=>{walkieSetStatus("🔊 Tap 🎙️ once to enable partner audio");});
   };
   pc.onconnectionstatechange=()=>{
     if(["failed","closed","disconnected"].includes(pc.connectionState)){
       if(pc.connectionState==="failed")pc.restartIce?.();
-      walkieUpdatePeerText();
     }
+    walkieUpdatePeerText();
   };
   if(initiator) walkieMakeOffer(peerId,pc);
   return pc;
@@ -2825,14 +2787,24 @@ async function walkieMakeOffer(peerId,pc){
 async function walkieHandleConnection(peerId,data){
   const pc=walkieCreatePeer(peerId,false); if(!pc)return;
   try{
-    if(data.offer && !pc.currentRemoteDescription){
-      await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
-      walkieAttachStream(pc);
-      const answer=await pc.createAnswer();
-      await pc.setLocalDescription(answer);
-      await walkieRemoteRef(peerId)?.update({answer:{type:answer.type,sdp:answer.sdp},updatedAt:firebase.database.ServerValue.TIMESTAMP});
+    if(data.offer){
+      const offerId=String(data.offer.sdp||"").slice(-80);
+      if(pc._lastWalkieOfferId!==offerId){
+        pc._lastWalkieOfferId=offerId;
+        await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
+        walkieAttachStream(pc);
+        const answer=await pc.createAnswer();
+        await pc.setLocalDescription(answer);
+        await walkieRemoteRef(peerId)?.update({answer:{type:answer.type,sdp:answer.sdp},updatedAt:firebase.database.ServerValue.TIMESTAMP});
+      }
     }
-    if(data.answer && !pc.currentRemoteDescription){await pc.setRemoteDescription(new RTCSessionDescription(data.answer));}
+    if(data.answer){
+      const answerId=String(data.answer.sdp||"").slice(-80);
+      if(pc._lastWalkieAnswerId!==answerId && pc.signalingState !== "stable"){
+        pc._lastWalkieAnswerId=answerId;
+        await pc.setRemoteDescription(new RTCSessionDescription(data.answer));
+      }
+    }
     const list=walkiePendingCandidates[peerId]||[];
     while(list.length){const c=list.shift();try{await pc.addIceCandidate(new RTCIceCandidate(c));}catch(e){}}
   }catch(e){console.warn("Walkie signaling failed",e);}
@@ -2848,7 +2820,7 @@ function walkieListenPeer(peerId){
 }
 function walkieUpdatePeerText(){
   const ids=Object.keys(walkiePeers).filter(id=>walkiePeers[id]?.connectionState==="connected");
-  walkieSetPeer(ids.length ? ids.length+" connected" : "Waiting for participants…");
+  walkieSetPeer(ids.length ? ids.length+" connected" : "Connecting to room…");
 }
 function walkieConnectAll(){
   if(!roomRef||!clientId)return;
@@ -2857,7 +2829,7 @@ function walkieConnectAll(){
     Object.keys(ps).filter(id=>id!==clientId).forEach(peerId=>{
       const initiator=String(clientId)<String(peerId);
       walkieCreatePeer(peerId,initiator);
-      walkieListenPeer(peerId);
+      if(!walkiePeers[peerId]._listening){walkiePeers[peerId]._listening=true;walkieListenPeer(peerId);}
     });
     walkieUpdatePeerText();
   });
@@ -2871,7 +2843,7 @@ function walkieWatchParticipants(){
       if(!walkiePeers[peerId]._listening){walkiePeers[peerId]._listening=true;walkieListenPeer(peerId);}
     });
     Object.keys(walkiePeers).forEach(id=>{
-      if(!ps[id]){walkiePeers[id].close();delete walkiePeers[id];document.getElementById("walkieAudio-"+id)?.remove();}
+      if(!ps[id]){walkiePeers[id].close();delete walkiePeers[id];delete walkiePendingCandidates[id];document.getElementById("walkieAudio-"+id)?.remove();}
     });
     walkieUpdatePeerText();
   });
@@ -2879,13 +2851,17 @@ function walkieWatchParticipants(){
 async function walkiePress(){
   if(walkieSpeaking)return;
   try{
+    /* Must happen directly from the user's pointer gesture on mobile. */
     await walkieGetMic();
+    const audios=document.querySelectorAll("audio[id^='walkieAudio-']");
+    audios.forEach(a=>{a.muted=false;const p=a.play();if(p?.catch)p.catch(()=>{});});
     walkieSpeaking=true;
     walkieStream.getAudioTracks().forEach(t=>t.enabled=true);
-    const b=document.getElementById("walkieTalk"),o=document.getElementById("walkieOrb");
-    b?.classList.add("active");o?.classList.add("walkie-speaking");
+    const o=document.getElementById("walkieOrb");
+    o?.classList.add("active","walkie-speaking");
     walkieSetStatus("🔴 You are talking… release to stop");
   }catch(e){
+    console.error("Walkie microphone error",e);
     walkieSetStatus("🎙️ Microphone permission is needed");
     showToast?.("Allow microphone access to use Walkie Talkie.");
   }
@@ -2894,30 +2870,30 @@ function walkieRelease(){
   if(!walkieSpeaking)return;
   walkieSpeaking=false;
   walkieStream?.getAudioTracks().forEach(t=>t.enabled=false);
-  document.getElementById("walkieTalk")?.classList.remove("active");
-  document.getElementById("walkieOrb")?.classList.remove("walkie-speaking");
+  document.getElementById("walkieOrb")?.classList.remove("active","walkie-speaking");
   walkieSetStatus("Hold 🎙️ to talk");
 }
 function startWalkieTalkie(){
   if(walkieStarted)return;
   walkieStarted=true;
   walkieShow();
-  const btn=document.getElementById("walkieTalk"),w=document.getElementById("walkieWidget"),close=document.getElementById("walkieClose"),orb=document.getElementById("walkieOrb");
+  const btn=document.getElementById("walkieOrb"),w=document.getElementById("walkieWidget");
+  /* One button only: press-and-hold the radio button to transmit. */
   btn?.addEventListener("pointerdown",e=>{e.preventDefault();btn.setPointerCapture?.(e.pointerId);walkiePress();});
   btn?.addEventListener("pointerup",e=>{e.preventDefault();walkieRelease();});
-  btn?.addEventListener("pointercancel",walkieRelease);btn?.addEventListener("pointerleave",e=>{if(e.buttons===0)walkieRelease();});
+  btn?.addEventListener("pointercancel",walkieRelease);
+  btn?.addEventListener("lostpointercapture",walkieRelease);
+  btn?.addEventListener("pointerleave",e=>{if(e.buttons===0)walkieRelease();});
   btn?.addEventListener("keydown",e=>{if((e.key===" "||e.key==="Enter")&&!walkieSpeaking){e.preventDefault();walkiePress();}});
   btn?.addEventListener("keyup",e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();walkieRelease();}});
-  close?.addEventListener("click",()=>{walkieRelease();walkieHide();});
-  orb?.addEventListener("click",()=>walkieSetExpanded(!walkieExpanded));
+  btn?.addEventListener("contextmenu",e=>e.preventDefault());
   w?.addEventListener("click",e=>{if(e.target===w)walkieSetExpanded(!walkieExpanded);});
   walkieConnectAll();walkieWatchParticipants();
 }
 function stopWalkieTalkie(){
   walkieRelease();
   if(roomRef)walkieParticipants()?.off("value");
-  Object.values(walkiePeers).forEach(pc=>pc.close());
-  Object.keys(walkiePeers).forEach(id=>document.getElementById("walkieAudio-"+id)?.remove());
+  Object.keys(walkiePeers).forEach(id=>{try{walkiePeers[id].close();}catch(e){} document.getElementById("walkieAudio-"+id)?.remove();delete walkiePeers[id];});
   walkieStream?.getTracks().forEach(t=>t.stop());walkieStream=null;
 }
 
@@ -3381,13 +3357,25 @@ cancelSourceButton.onclick = closeSourceModal;
 async function savePersonalSource(source, makeCanonical){
   if(!roomRef) throw new Error("No room");
   source={...source, ownerId:clientId, ownerName:myName, updatedAt:Date.now()};
+  /* Every newly selected source starts paused. Firebase playback state is
+     reset first so an old PLAY command cannot immediately restart it. */
+  if(makeCanonical){
+    const initialPlayback={action:"pause",time:0,playing:false,stamp:Date.now()+serverTimeOffset,sourceKey:sourceIdentity(source),clientId:clientId};
+    await roomRef.update({sharedSource:source,playback:initialPlayback});
+    canonicalSource=source;
+    lastLocalCommandStamp=Number(initialPlayback.stamp)||Date.now();
+    lastRemotePlaybackCommand=initialPlayback;
+    pendingRemotePlayback=null;
+  }
   currentSource=source;
   await roomRef.child("sources").child(clientId).set(source);
-  if(makeCanonical){
-    canonicalSource=source;
-    await roomRef.child("sharedSource").set(source);
-  }
   applySource(source,false);
+  if(source.type==="local"){
+    remoteApplying=true;
+    localVideo.pause();
+    try{localVideo.currentTime=0;}catch(e){}
+    setTimeout(()=>{remoteApplying=false;},350);
+  }
   updateSourceInfo();
   updateMediaButtons();
 }
@@ -3505,6 +3493,9 @@ function applySource(
       youtubeContainer.classList.add("hidden");
       emptyState.classList.add("hidden");
       localVideo.controls=canControl();
+      localVideo.pause();
+      try{localVideo.currentTime=0;}catch(e){}
+      if(remote) pendingRemotePlayback=null;
       applyPendingPlaybackWhenReady();
     }else if(source.type==="drive" && !localVideo.src){
       localVideo.src=source.playbackUrl || drivePlaybackUrl(source.driveId);
@@ -3605,6 +3596,9 @@ function applySource(
           localVideo.load();
 
         }
+        /* Never autoplay a newly selected local file. */
+        localVideo.pause();
+        try{localVideo.currentTime=0;}catch(e){}
 
 
         emptyState.classList.add(
@@ -3969,10 +3963,22 @@ function loadYouTube(
   videoId
 ){
 
-  if(!youtubeAPIReady){
-
+  if(!videoId) return;
+  if(!ensureYouTubeAPI()){
+    let tries=0;
+    clearInterval(window.__purloYTWait);
+    window.__purloYTWait=setInterval(function(){
+      tries++;
+      if(window.YT && typeof YT.Player === "function"){
+        clearInterval(window.__purloYTWait);
+        youtubeAPIReady=true;
+        loadYouTube(videoId);
+      }else if(tries>60){
+        clearInterval(window.__purloYTWait);
+        showToast("YouTube could not load. Check the phone internet connection.");
+      }
+    },250);
     return;
-
   }
 
 
@@ -3987,9 +3993,7 @@ function loadYouTube(
 
     try{
 
-      youtubePlayer.loadVideoById(
-        videoId
-      );
+      youtubePlayer.cueVideoById(videoId);
 
       /*
         Do NOT assume the player is ready immediately.
@@ -4046,16 +4050,14 @@ function loadYouTube(
           enablejsapi:
             1,
 
+          host:
+            "https://www.youtube.com",
+
           cc_load_policy:
             0,
 
           origin:
-            location.protocol ===
-              "http:" ||
-            location.protocol ===
-              "https:"
-              ? location.origin
-              : undefined
+            (location.protocol === "http:" || location.protocol === "https:") ? location.origin : "https://www.youtube.com"
 
         },
 
@@ -7799,14 +7801,12 @@ function closeEmojiMovies(){if(emojiMovieRef&&emojiMovieListener)emojiMovieRef.o
 
 <!-- WALKIE TALKIE -->
 <div id="walkieWidget" class="walkie-widget" aria-label="Walkie Talkie">
-  <button id="walkieClose" class="walkie-close" type="button" title="Hide">×</button>
   <button id="walkieOrb" class="walkie-orb" type="button" aria-label="Open Walkie Talkie" title="Walkie Talkie">📻</button>
   <div class="walkie-info">
     <div class="walkie-title">Walkie Talkie</div>
     <div id="walkieStatus" class="walkie-status">Hold 🎙️ to talk</div>
     <div id="walkiePeer" class="walkie-peer">Tap 📻 to open • Hold 🎙️ to talk</div>
   </div>
-  <button id="walkieTalk" class="walkie-talk" type="button" aria-label="Hold to talk">🎙️</button>
   <audio id="walkieAudio" class="walkie-audio" autoplay playsinline></audio>
 </div>
 </body>
