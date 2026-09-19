@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1192,15 +1191,382 @@ button{
 .bingo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;max-width:520px;margin:16px auto}.bingo-cell{aspect-ratio:1;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(255,255,255,.055);color:#fff;font-weight:800;font-size:16px;cursor:pointer}.bingo-cell.called{background:linear-gradient(135deg,rgba(255,79,154,.28),rgba(156,77,255,.28));border-color:rgba(255,255,255,.25)}.bingo-cell:disabled{opacity:.65;cursor:not-allowed}@media(max-width:560px){.bingo-grid{gap:5px}.bingo-cell{font-size:13px;border-radius:9px}}
 </style>
 <style id="purloActivityFix">
-50%{transform:translateY(-8px)}}
-.activity-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 12px;background:rgba(255,255,255,.05);border-radius:14px;margin-bottom:12px;font-size:12px}.activity-head span,.activity-score{color:#aaa;font-size:12px}.activity-grid{display:grid;gap:7px}.bingo-grid{grid-template-columns:repeat(5,1fr);max-width:520px;margin:auto}.activity-cell{aspect-ratio:1;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.06);color:#fff;font-weight:800;cursor:pointer}.activity-cell:disabled{opacity:.45;cursor:not-allowed}.activity-cell.available{border-color:rgba(255,110,190,.5)}.activity-cell.on{background:linear-gradient(135deg,rgba(255,79,154,.45),rgba(156,77,255,.45));box-shadow:0 0 18px rgba(255,79,154,.18)}.activity-called{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px}.activity-called span{padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.06);font-size:11px}.activity-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.activity-actions .modal-btn{flex:1;min-width:130px}.activity-big{text-align:center;font-size:48px;font-weight:900;padding:25px 10px}.activity-result{text-align:center;font-size:22px;font-weight:800;padding:28px 10px}.rps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.activity-choice,.color-choice{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;border-radius:18px;padding:18px;cursor:pointer;font-size:30px}.activity-choice small{display:block;font-size:11px;margin-top:7px}.color-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.color-choice{font-size:25px}.color-choice span{display:block;font-size:10px;margin-top:6px}.tap-huge{min-height:90px;font-size:28px}.spin-wheel{text-align:center;font-size:64px;animation:purloSpin 1s ease}.spin-text{font-size:22px;min-height:100px}@keyframes purloSpin{from{transform:rotate(-20deg)}to{transform:rotate(340deg)}}@media(max-width:520px){.rps-row,.color-grid{grid-template-columns:1fr 1fr}.activity-actions{flex-direction:column}.activity-actions .modal-btn{width:100%}}
+@keyframes purloActivityFloat{
+  50%{transform:translateY(-8px)}
+}
+
+.activity-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:10px 12px;
+  background:rgba(255,255,255,.05);
+  border-radius:14px;
+  margin-bottom:12px;
+  font-size:12px
+}
+
+.activity-head span,
+.activity-score{
+  color:#aaa;
+  font-size:12px
+}
+
+.activity-grid{
+  display:grid;
+  gap:7px
+}
+
+.bingo-grid{
+  grid-template-columns:repeat(5,1fr);
+  max-width:520px;
+  margin:auto
+}
+
+.activity-cell{
+  aspect-ratio:1;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  font-weight:800;
+  cursor:pointer
+}
+
+.activity-cell:disabled{
+  opacity:.45;
+  cursor:not-allowed
+}
+
+.activity-cell.available{
+  border-color:rgba(255,110,190,.5)
+}
+
+.activity-cell.on{
+  background:linear-gradient(
+    135deg,
+    rgba(255,79,154,.45),
+    rgba(156,77,255,.45)
+  );
+  box-shadow:0 0 18px rgba(255,79,154,.18)
+}
+
+.activity-called{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+  margin-top:12px
+}
+
+.activity-called span{
+  padding:6px 8px;
+  border-radius:8px;
+  background:rgba(255,255,255,.06);
+  font-size:11px
+}
+
+.activity-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:16px
+}
+
+.activity-actions .modal-btn{
+  flex:1;
+  min-width:130px
+}
+
+.activity-big{
+  text-align:center;
+  font-size:48px;
+  font-weight:900;
+  padding:25px 10px
+}
+
+.activity-result{
+  text-align:center;
+  font-size:22px;
+  font-weight:800;
+  padding:28px 10px
+}
+
+.rps-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px
+}
+
+.activity-choice,
+.color-choice{
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  border-radius:18px;
+  padding:18px;
+  cursor:pointer;
+  font-size:30px
+}
+
+.activity-choice small{
+  display:block;
+  font-size:11px;
+  margin-top:7px
+}
+
+.color-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px
+}
+
+.color-choice{
+  font-size:25px
+}
+
+.color-choice span{
+  display:block;
+  font-size:10px;
+  margin-top:6px
+}
+
+.tap-huge{
+  min-height:90px;
+  font-size:28px
+}
+
+.spin-wheel{
+  text-align:center;
+  font-size:64px;
+  animation:purloSpin 1s ease
+}
+
+.spin-text{
+  font-size:22px;
+  min-height:100px
+}
+
+@keyframes purloSpin{
+  from{transform:rotate(-20deg)}
+  to{transform:rotate(340deg)}
+}
+
+@media(max-width:520px){
+  .rps-row,
+  .color-grid{
+    grid-template-columns:1fr 1fr
+  }
+
+  .activity-actions{
+    flex-direction:column
+  }
+
+  .activity-actions .modal-btn{
+    width:100%
+  }
+}
 </style>
 
-<style id="walkieTalkieStyles">
-.walkie-widget{position:fixed;right:18px;left:auto;bottom:max(78px,calc(env(safe-area-inset-bottom) + 78px));z-index:10050;width:66px;height:66px;padding:6px;border:1px solid rgba(255,255,255,.16);border-radius:22px;background:rgba(15,12,24,.82);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 18px 55px rgba(0,0,0,.45);display:none;gap:10px;align-items:center;overflow:visible;transition:.22s ease}
-.walkie-widget.show{display:flex}.walkie-widget.expanded{width:min(310px,calc(100vw - 24px));height:auto;padding:12px}.walkie-widget.expanded .walkie-info{display:block}.walkie-widget:not(.expanded) .walkie-info,.walkie-widget:not(.expanded) .walkie-close{display:none}.walkie-orb{cursor:pointer;width:48px;height:48px;flex:0 0 48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#ff4f9a,#8b5cf6);box-shadow:0 7px 0 rgba(73,35,115,.45),0 0 24px rgba(255,79,154,.25);font-size:22px}.walkie-info{min-width:0;flex:1}.walkie-title{font-weight:900;font-size:13px}.walkie-status{font-size:11px;opacity:.62;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.walkie-talk{width:58px;height:58px;border:0;border-radius:18px;background:rgba(255,255,255,.09);color:#fff;font-size:24px;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 5px 15px rgba(0,0,0,.2)}.walkie-talk.active{background:linear-gradient(145deg,#ff4f9a,#8b5cf6);transform:scale(1.05);box-shadow:0 0 0 5px rgba(255,79,154,.16),0 8px 24px rgba(139,92,246,.35)}.walkie-widget .walkie-close{display:none!important}.walkie-widget .walkie-info{pointer-events:none}.walkie-speaking{animation:walkiePulse 1s ease-in-out infinite}.walkie-peer{font-size:10px;opacity:.5;margin-top:3px}.walkie-audio{display:none}
-@keyframes walkiePulse{50%{box-shadow:0 0 0 8px rgba(255,79,154,.12),0 0 30px rgba(255,79,154,.45)}}
-@media(max-width:600px){.walkie-widget{right:12px;left:auto;bottom:max(74px,calc(env(safe-area-inset-bottom) + 74px));width:62px;height:62px;padding:6px}.walkie-widget.expanded{width:calc(100vw - 20px);height:auto;padding:10px}.walkie-orb{width:43px;height:43px;flex-basis:43px}.walkie-talk{width:54px;height:54px}}
+
+
+<style id="purlo-mobile-game-layout-fix">
+/* PURLO MOBILE GAME LAYOUT — FULL SCREEN */
+@media (max-width: 760px){
+  body:has(#doodleModal:not(.hidden)),
+  body:has(#ticTacToeModal:not(.hidden)),
+  body:has(#chessModal:not(.hidden)),
+  body:has(#memoryModal:not(.hidden)),
+  body:has(#ludoModal:not(.hidden)),
+  body:has(#connectFourModal:not(.hidden)),
+  body:has(#coupleChallengesModal:not(.hidden)),
+  body:has(#coupleQuizModal:not(.hidden)),
+  body:has(#extraGameModal:not(.hidden)),
+  body:has(#quickGameOverlay:not(.hidden)){
+    overflow:hidden !important;
+  }
+
+  #doodleModal,
+  #ticTacToeModal,
+  #chessModal,
+  #memoryModal,
+  #ludoModal,
+  #connectFourModal,
+  #coupleChallengesModal,
+  #coupleQuizModal,
+  #extraGameModal,
+  #quickGameOverlay{
+    position:fixed !important;
+    inset:0 !important;
+    width:100vw !important;
+    height:100dvh !important;
+    min-height:100dvh !important;
+    max-height:none !important;
+    padding:0 !important;
+    margin:0 !important;
+    border-radius:0 !important;
+    overflow:hidden !important;
+  }
+
+  #doodleModal .doodle-modal,
+  #ticTacToeModal .modal,
+  #chessModal .modal,
+  #memoryModal .memory-modal,
+  #ludoModal .ludo-modal,
+  #connectFourModal .modal,
+  #coupleChallengesModal .modal,
+  #coupleQuizModal .modal,
+  #extraGameModal .modal,
+  #quickGameOverlay > *{
+    width:100% !important;
+    max-width:none !important;
+    height:100dvh !important;
+    max-height:100dvh !important;
+    min-height:100dvh !important;
+    border-radius:0 !important;
+    box-sizing:border-box !important;
+  }
+
+  /* Doodle: board + chat are visible together without page scrolling. */
+  #doodleModal .doodle-modal{
+    display:flex;
+    flex-direction:column;
+    padding:max(7px, env(safe-area-inset-top)) 7px max(7px, env(safe-area-inset-bottom)) !important;
+    overflow:hidden !important;
+  }
+  #doodleModal .doodle-head{flex:0 0 auto;margin-bottom:4px;}
+  #doodleModal .doodle-title{font-size:17px;}
+  #doodleModal .doodle-sub{font-size:9px;margin-top:2px;}
+  #doodleModal .doodle-close{width:30px;height:30px;font-size:18px;}
+  #doodleModal .doodle-status{flex:0 0 auto;margin-bottom:4px;min-height:25px;}
+  #doodleModal .doodle-role,
+  #doodleModal .doodle-timer{padding:3px 6px;font-size:8px;}
+  #doodleModal .doodle-scoreboard{gap:3px;margin-left:auto;}
+  #doodleModal .doodle-score{padding:3px 5px;border-radius:8px;font-size:7px;line-height:1.05;}
+  #doodleModal .doodle-score strong{font-size:9px;margin-top:1px;}
+  #doodleModal .doodle-word{flex:0 0 auto;margin-bottom:4px;padding:5px 6px;min-height:25px;font-size:9px;border-radius:8px;}
+
+  #doodleModal .doodle-layout{
+    flex:1 1 auto;
+    min-height:0;
+    grid-template-columns:minmax(0,1.55fr) minmax(118px,.9fr);
+    gap:5px;
+    overflow:hidden;
+  }
+  #doodleModal .doodle-main{
+    min-width:0;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  #doodleModal .doodle-canvas-wrap{
+    flex:1 1 auto;
+    min-height:0;
+    aspect-ratio:auto;
+    border-radius:10px;
+  }
+  #doodleModal #doodleCanvas{width:100%;height:100%;}
+  #doodleModal .doodle-chat{
+    min-width:0;
+    min-height:0;
+    height:100%;
+    border-radius:10px;
+  }
+  #doodleModal .doodle-chat-head{padding:6px 7px;font-size:9px;}
+  #doodleModal .doodle-chat-messages{padding:5px;}
+  #doodleModal .doodle-chat-row{margin-bottom:4px;}
+  #doodleModal .doodle-chat-name{font-size:7px;margin-bottom:1px;}
+  #doodleModal .doodle-chat-bubble{padding:4px 5px;font-size:8px;line-height:1.25;border-radius:7px;}
+  #doodleModal .doodle-chat-input{gap:3px;padding:4px;}
+  #doodleModal .doodle-chat-input input{height:29px;padding:0 6px;font-size:8px;border-radius:7px;}
+  #doodleModal .doodle-chat-input button{height:29px;padding:0 6px;font-size:8px;border-radius:7px;}
+
+  #doodleModal .doodle-toolbar{flex:0 0 auto;gap:3px;margin-top:4px;min-height:25px;}
+  #doodleModal .doodle-tool{min-height:25px;padding:4px 6px;font-size:8px;border-radius:7px;}
+  #doodleModal .doodle-toolbar > span{font-size:8px !important;}
+  #doodleModal .doodle-color{width:19px;height:19px;border-width:2px;}
+  #doodleModal .doodle-size{width:50px;height:18px;}
+  #doodleModal .doodle-message{flex:0 0 auto;margin-top:4px;padding:4px 5px;font-size:8px;border-radius:7px;}
+  #doodleModal .doodle-start{flex:0 0 auto;margin-top:4px;min-height:28px;padding:5px;font-size:9px;}
+
+  /* Other games use the full phone viewport; their own content can scroll internally. */
+  #ticTacToeModal .modal,
+  #chessModal .modal,
+  #memoryModal .memory-modal,
+  #ludoModal .ludo-modal,
+  #connectFourModal .modal,
+  #coupleChallengesModal .modal,
+  #coupleQuizModal .modal,
+  #extraGameModal .modal,
+  #quickGameOverlay > *{
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch;
+    padding-top:max(10px, env(safe-area-inset-top)) !important;
+    padding-bottom:max(10px, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+@media (max-width:380px){
+  #doodleModal .doodle-layout{grid-template-columns:minmax(0,1.45fr) minmax(105px,.82fr);gap:4px;}
+  #doodleModal .doodle-score span{max-width:48px;overflow:hidden;text-overflow:ellipsis;}
+  #doodleModal .doodle-tool{padding-left:4px;padding-right:4px;}
+  #doodleModal .doodle-size{width:43px;}
+}
+</style>
+
+<style id="purlo-final-mobile-game-ui">
+/* FINAL GAME UI: phone uses the entire viewport; content scrolls only inside a game when truly needed. */
+@media (max-width:760px){
+  body:has(#ticTacToeModal:not(.hidden)),body:has(#chessModal:not(.hidden)),body:has(#memoryModal:not(.hidden)),body:has(#ludoModal:not(.hidden)),body:has(#connectFourModal:not(.hidden)),body:has(#coupleChallengesModal:not(.hidden)),body:has(#coupleQuizModal:not(.hidden)),body:has(#extraGameModal:not(.hidden)),body:has(#longGameModal:not(.hidden)),body:has(#quickGameOverlay:not(.hidden)){overflow:hidden!important}
+  #ticTacToeModal,#chessModal,#memoryModal,#ludoModal,#connectFourModal,#coupleChallengesModal,#coupleQuizModal,#extraGameModal,#longGameModal,#quickGameOverlay{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;padding:0!important;margin:0!important;border-radius:0!important;overflow:hidden!important}
+  #ticTacToeModal>.modal,#chessModal>.modal,#memoryModal>.memory-modal,#ludoModal>.ludo-modal,#connectFourModal>.modal,#coupleChallengesModal>.modal,#coupleQuizModal>.modal,#extraGameModal>.modal,#longGameModal>.modal,#quickGameOverlay>*{width:100%!important;max-width:none!important;height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;box-sizing:border-box!important;border-radius:0!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;padding-top:max(8px,env(safe-area-inset-top))!important;padding-bottom:max(8px,env(safe-area-inset-bottom))!important}
+
+  /* Doodle is a compact full-screen workspace: board first, chat immediately below it. */
+  #doodleModal{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;padding:0!important;margin:0!important;border-radius:0!important;overflow:hidden!important}
+  #doodleModal .doodle-modal{width:100%!important;height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;box-sizing:border-box!important;border-radius:0!important;padding:max(5px,env(safe-area-inset-top)) 5px max(5px,env(safe-area-inset-bottom))!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;gap:0!important}
+  #doodleModal .doodle-head{position:relative;flex:0 0 31px!important;min-height:31px!important;margin:0 0 2px!important;align-items:center!important}
+  #doodleModal .doodle-title{font-size:15px!important;line-height:1!important}
+  #doodleModal .doodle-sub{display:none!important}
+  #doodleModal .doodle-close{width:28px!important;height:28px!important;font-size:17px!important;border-radius:8px!important}
+  #doodleModal .doodle-status{position:absolute!important;top:5px!important;right:36px!important;margin:0!important;display:flex!important;gap:3px!important;min-height:0!important;z-index:3!important}
+  #doodleModal .doodle-role,#doodleModal .doodle-timer{padding:2px 5px!important;font-size:7px!important;line-height:1.1!important}
+  #doodleModal .doodle-scoreboard{position:absolute!important;top:4px!important;left:55px!important;display:flex!important;gap:2px!important;margin:0!important}
+  #doodleModal .doodle-score{padding:2px 4px!important;border-radius:6px!important;font-size:6px!important;line-height:1!important;display:flex!important;align-items:center!important;gap:3px!important}
+  #doodleModal .doodle-score span{max-width:45px!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+  #doodleModal .doodle-score strong{font-size:7px!important;margin:0!important}
+  #doodleModal .doodle-word{flex:0 0 25px!important;min-height:25px!important;height:25px!important;margin:0 0 3px!important;padding:4px 6px!important;font-size:8px!important;border-radius:7px!important;line-height:1.1!important;overflow:hidden!important}
+  #doodleModal .doodle-layout{flex:1 1 auto!important;min-height:0!important;display:flex!important;flex-direction:column!important;gap:3px!important;overflow:hidden!important}
+  #doodleModal .doodle-main{flex:0 0 45%!important;min-height:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+  #doodleModal .doodle-canvas-wrap{flex:1 1 auto!important;min-height:0!important;height:auto!important;aspect-ratio:auto!important;border-radius:9px!important}
+  #doodleModal #doodleCanvas{width:100%!important;height:100%!important}
+  #doodleModal .doodle-toolbar{flex:0 0 25px!important;min-height:25px!important;height:25px!important;gap:3px!important;margin:3px 0 0!important;overflow:hidden!important;flex-wrap:nowrap!important}
+  #doodleModal .doodle-tool{min-height:23px!important;height:23px!important;padding:3px 5px!important;font-size:7px!important;border-radius:6px!important;white-space:nowrap!important}
+  #doodleModal .doodle-toolbar>span{font-size:7px!important}
+  #doodleModal .doodle-color{width:17px!important;height:17px!important;min-width:17px!important;border-width:2px!important}
+  #doodleModal .doodle-size{width:45px!important;height:17px!important;min-width:45px!important}
+  #doodleModal .doodle-message{flex:0 0 23px!important;height:23px!important;min-height:23px!important;margin:2px 0 0!important;padding:3px 5px!important;font-size:7px!important;border-radius:6px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  #doodleModal .doodle-start{flex:0 0 24px!important;height:24px!important;min-height:24px!important;margin:2px 0 0!important;padding:3px 5px!important;font-size:8px!important;border-radius:6px!important}
+  #doodleModal .doodle-chat{flex:1 1 55%!important;min-height:0!important;height:auto!important;border-radius:9px!important}
+  #doodleModal .doodle-chat-head{flex:0 0 22px!important;height:22px!important;padding:4px 6px!important;font-size:8px!important}
+  #doodleModal .doodle-chat-messages{flex:1 1 auto!important;min-height:0!important;padding:4px!important}
+  #doodleModal .doodle-chat-row{margin-bottom:3px!important}
+  #doodleModal .doodle-chat-name{font-size:6px!important;margin-bottom:1px!important}
+  #doodleModal .doodle-chat-bubble{padding:3px 5px!important;border-radius:6px!important;font-size:8px!important;line-height:1.2!important}
+  #doodleModal .doodle-chat-input{flex:0 0 31px!important;height:31px!important;gap:3px!important;padding:3px!important}
+  #doodleModal .doodle-chat-input input{height:25px!important;padding:0 6px!important;font-size:8px!important;border-radius:6px!important}
+  #doodleModal .doodle-chat-input button{height:25px!important;padding:0 7px!important;font-size:7px!important;border-radius:6px!important}
+  #doodleModal .doodle-spectator{font-size:8px!important;padding:5px!important}
+}
+@media (max-width:380px){
+  #doodleModal .doodle-main{flex-basis:43%!important}
+  #doodleModal .doodle-chat{flex-basis:57%!important}
+  #doodleModal .doodle-scoreboard{left:50px!important}
+  #doodleModal .doodle-score span{max-width:38px!important}
+  #doodleModal .doodle-tool{padding-left:4px!important;padding-right:4px!important}
+  #doodleModal .doodle-size{width:38px!important;min-width:38px!important}
+}
 </style>
 </head>
 
@@ -1786,27 +2152,30 @@ button{
 
 <!-- DOODLE -->
 <style>
-.doodle-modal{width:min(920px,calc(100% - 24px));max-height:calc(100vh - 24px);overflow:auto;padding:20px;border-radius:26px;background:rgba(15,11,24,.97);border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 100px rgba(0,0,0,.65);color:#fff}
+.doodle-modal{width:min(1050px,calc(100% - 24px));max-height:calc(100vh - 24px);overflow:auto;padding:20px;border-radius:26px;background:rgba(15,11,24,.97);border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 100px rgba(0,0,0,.65);color:#fff}
 .doodle-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:14px}.doodle-title{font-size:25px;font-weight:850}.doodle-sub{margin-top:5px;font-size:13px;opacity:.62}.doodle-close{width:40px;height:40px;border:0;border-radius:13px;background:rgba(255,255,255,.08);color:#fff;font-size:23px;cursor:pointer}
-.doodle-status{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}.doodle-role,.doodle-timer{padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.07);font-size:13px;font-weight:800}.doodle-timer{min-width:72px;text-align:center;background:rgba(255,75,175,.15);border:1px solid rgba(255,100,190,.22)}
+.doodle-status{display:flex;align-items:center;gap:7px;flex-wrap:nowrap;margin-bottom:10px}.doodle-role,.doodle-timer{padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.07);font-size:11px;font-weight:800;white-space:nowrap}.doodle-timer{min-width:54px;text-align:center;background:rgba(255,75,175,.15);border:1px solid rgba(255,100,190,.22)}
 .doodle-word{margin-bottom:12px;padding:12px 15px;border-radius:15px;background:rgba(255,255,255,.055);text-align:center;font-weight:800;min-height:45px}.doodle-word span{opacity:.65;font-weight:600}
-.doodle-canvas-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:#fff;border:1px solid rgba(255,255,255,.12);touch-action:none}#doodleCanvas{display:block;width:100%;height:100%;cursor:crosshair;touch-action:none}
+.doodle-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:10px;align-items:stretch}.doodle-main{min-width:0}.doodle-canvas-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:#fff;border:1px solid rgba(255,255,255,.12);touch-action:none}#doodleCanvas{display:block;width:100%;height:100%;cursor:crosshair;touch-action:none}
 .doodle-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}.doodle-tool{min-height:38px;padding:8px 12px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.065);color:#fff;cursor:pointer;font-weight:700}.doodle-tool:disabled{opacity:.35;cursor:not-allowed}.doodle-color{width:30px;height:30px;border-radius:50%;border:3px solid rgba(255,255,255,.25);cursor:pointer}.doodle-color.active{border-color:#fff;transform:scale(1.12)}.doodle-size{width:100px}
-.doodle-guess-area{display:flex;gap:8px;margin-top:12px}.doodle-guess-input{flex:1;min-width:0;height:44px;border:1px solid rgba(255,255,255,.1);border-radius:13px;background:rgba(255,255,255,.06);color:#fff;padding:0 13px;outline:none}.doodle-guess-input:focus{border-color:rgba(255,120,210,.6)}
-.doodle-scoreboard{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.doodle-score{padding:11px 13px;border-radius:14px;background:rgba(255,255,255,.055);font-size:13px}.doodle-score strong{display:block;font-size:17px;margin-top:3px}.doodle-message{margin-top:12px;padding:12px;border-radius:13px;background:rgba(255,255,255,.055);text-align:center;font-size:13px;min-height:43px}.doodle-start{width:100%;margin-top:12px}.doodle-spectator{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);color:#fff;font-weight:800;text-align:center;padding:20px;pointer-events:none}.doodle-spectator.hidden{display:none}
-@media(max-width:600px){.doodle-modal{padding:14px;border-radius:20px}.doodle-title{font-size:21px}.doodle-scoreboard{grid-template-columns:1fr}.doodle-guess-area{flex-direction:column}.doodle-guess-input{width:100%}}
+.doodle-chat{display:flex;flex-direction:column;min-height:0;height:100%;max-height:none;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:rgba(255,255,255,.035);overflow:hidden}.doodle-chat-head{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.08);font-weight:850}.doodle-chat-messages{flex:1;overflow-y:auto;padding:10px}.doodle-chat-row{margin-bottom:9px}.doodle-chat-name{font-size:11px;font-weight:800;opacity:.6;margin-bottom:3px}.doodle-chat-bubble{display:inline-block;max-width:100%;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.07);font-size:13px;line-height:1.35;word-break:break-word}.doodle-chat-row.mine .doodle-chat-bubble{background:rgba(156,77,255,.25)}.doodle-chat-row.correct .doodle-chat-bubble{background:rgba(35,190,95,.22);border:1px solid rgba(60,220,120,.45);color:#65f29a;font-weight:850}.doodle-chat-row.system .doodle-chat-bubble{background:rgba(255,255,255,.045);opacity:.75;font-style:italic}.doodle-chat-input{display:flex;gap:7px;padding:10px;border-top:1px solid rgba(255,255,255,.08)}.doodle-chat-input input{min-width:0;flex:1;height:40px;border:1px solid rgba(255,255,255,.1);border-radius:11px;background:rgba(0,0,0,.22);color:#fff;padding:0 11px;outline:none}.doodle-chat-input input:focus{border-color:rgba(255,120,210,.6)}.doodle-chat-input button{height:40px;padding:0 13px;border:0;border-radius:11px;background:linear-gradient(135deg,#ff4f9a,#9c4dff);color:#fff;font-weight:800;cursor:pointer}.doodle-chat-input button:disabled{opacity:.4;cursor:not-allowed}
+.doodle-scoreboard{display:flex;gap:5px;margin-left:auto}.doodle-score{display:flex;align-items:center;gap:5px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.055);font-size:10px;white-space:nowrap}.doodle-score strong{display:inline;font-size:12px;margin:0;opacity:.9}.doodle-score{padding:11px 13px;border-radius:14px;background:rgba(255,255,255,.055);font-size:13px}.doodle-score strong{display:block;font-size:17px;margin-top:3px}.doodle-start{width:100%;margin-top:12px}.doodle-spectator{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.42);color:#fff;font-weight:800;text-align:center;padding:20px;pointer-events:none}.doodle-spectator.hidden{display:none}.doodle-message{margin-top:12px;padding:10px 12px;border-radius:13px;background:rgba(255,255,255,.045);text-align:center;font-size:12px;opacity:.8}
+@media(max-width:760px){.doodle-modal{width:calc(100% - 10px);max-height:calc(100vh - 10px);padding:9px;border-radius:16px}.doodle-head{margin-bottom:7px;gap:8px}.doodle-title{font-size:18px}.doodle-sub{font-size:10px}.doodle-close{width:32px;height:32px;font-size:19px;border-radius:10px}.doodle-status{gap:4px;margin-bottom:7px}.doodle-role,.doodle-timer{padding:4px 7px;font-size:9px}.doodle-score{padding:4px 6px;font-size:8px}.doodle-score strong{font-size:10px}.doodle-word{margin-bottom:7px;padding:7px 8px;min-height:32px;font-size:10px;border-radius:10px}.doodle-layout{grid-template-columns:minmax(0,1.15fr) minmax(120px,.85fr);gap:6px}.doodle-chat{border-radius:11px}.doodle-chat-head{padding:7px 8px;font-size:10px}.doodle-chat-messages{padding:6px}.doodle-chat-row{margin-bottom:5px}.doodle-chat-name{font-size:8px;margin-bottom:2px}.doodle-chat-bubble{padding:5px 6px;border-radius:8px;font-size:9px}.doodle-chat-input{gap:4px;padding:5px}.doodle-chat-input input{height:30px;padding:0 7px;font-size:9px;border-radius:8px}.doodle-chat-input button{height:30px;padding:0 7px;font-size:9px;border-radius:8px}.doodle-toolbar{gap:4px;margin-top:6px}.doodle-tool{min-height:28px;padding:5px 7px;font-size:9px;border-radius:8px}.doodle-color{width:22px;height:22px}.doodle-size{width:60px}.doodle-message{margin-top:6px;padding:6px 7px;font-size:9px}.doodle-start{margin-top:6px;font-size:10px;padding:7px}.doodle-spectator{font-size:10px;padding:8px}}
 </style>
 <div class="modal-backdrop hidden" id="doodleModal">
   <div class="doodle-modal">
-    <div class="doodle-head"><div><div class="doodle-title">🎨 Doodle</div><div class="doodle-sub">One draws. One guesses. Then switch roles.</div></div><button class="doodle-close" id="doodleClose" type="button">×</button></div>
-    <div class="doodle-status"><div class="doodle-role" id="doodleRole">Connecting…</div><div class="doodle-timer" id="doodleTimer">60s</div></div>
-    <div class="doodle-word" id="doodleWord">Waiting for the game…</div>
-    <div class="doodle-canvas-wrap"><canvas id="doodleCanvas"></canvas><div class="doodle-spectator hidden" id="doodleSpectator">Doodle is currently using the first two players.</div></div>
-    <div class="doodle-toolbar"><button class="doodle-tool" id="doodleClear" type="button">🗑 Clear</button><button class="doodle-tool" id="doodleUndo" type="button">↩ Undo</button><button class="doodle-tool doodle-done" id="doodleDone" type="button">✓ Done Drawing</button><span style="opacity:.5;font-size:12px">Brush:</span><button class="doodle-color active" data-doodle-color="#111111" style="background:#111111" type="button"></button><button class="doodle-color" data-doodle-color="#ff3b30" style="background:#ff3b30" type="button"></button><button class="doodle-color" data-doodle-color="#007aff" style="background:#007aff" type="button"></button><button class="doodle-color" data-doodle-color="#34c759" style="background:#34c759" type="button"></button><button class="doodle-color" data-doodle-color="#ff9500" style="background:#ff9500" type="button"></button><input class="doodle-size" id="doodleBrushSize" type="range" min="2" max="30" value="6"></div>
-    <div class="doodle-guess-area"><input class="doodle-guess-input" id="doodleGuessInput" type="text" autocomplete="off" placeholder="Type your guess…"><button class="modal-btn primary" id="doodleGuessButton" type="button">Guess</button></div>
-    <div class="doodle-scoreboard"><div class="doodle-score"><span id="doodlePlayer1Name">Player 1</span><strong id="doodlePlayer1Score">0</strong></div><div class="doodle-score"><span id="doodlePlayer2Name">Player 2</span><strong id="doodlePlayer2Score">0</strong></div></div>
-    <div class="doodle-message" id="doodleMessage">Waiting for two players…</div>
-    <div style="display:flex;gap:8px;margin-top:12px"><button class="modal-btn primary doodle-start" id="doodleStart" type="button">🎨 Start Doodle</button><button class="modal-btn" id="doodleNewGame" type="button" style="margin-top:12px;display:none">New Game</button></div>
+    <div class="doodle-head"><div><div class="doodle-title">🎨 Doodle</div><div class="doodle-sub">Draw, chat, guess and switch turns automatically.</div></div><button class="doodle-close" id="doodleClose" type="button">×</button></div>
+    <div class="doodle-status"><div class="doodle-role" id="doodleRole">Connecting…</div><div class="doodle-scoreboard"><div class="doodle-score"><span id="doodlePlayer1Name">Player 1</span><strong id="doodlePlayer1Score">0</strong></div><div class="doodle-score"><span id="doodlePlayer2Name">Player 2</span><strong id="doodlePlayer2Score">0</strong></div></div><div class="doodle-timer" id="doodleTimer">90s</div></div>
+    <div class="doodle-word" id="doodleWord"><span>Waiting for two players…</span></div>
+    <div class="doodle-layout">
+      <div class="doodle-main">
+        <div class="doodle-canvas-wrap"><canvas id="doodleCanvas"></canvas><div class="doodle-spectator hidden" id="doodleSpectator">You are watching. The first two active members play.</div></div>
+        <div class="doodle-toolbar"><button class="doodle-tool" id="doodleClear" type="button">🗑 Clear</button><button class="doodle-tool" id="doodleUndo" type="button">↩ Undo</button><span style="opacity:.5;font-size:12px">Brush:</span><button class="doodle-color active" data-doodle-color="#111111" style="background:#111111" type="button"></button><button class="doodle-color" data-doodle-color="#ff3b30" style="background:#ff3b30" type="button"></button><button class="doodle-color" data-doodle-color="#007aff" style="background:#007aff" type="button"></button><button class="doodle-color" data-doodle-color="#34c759" style="background:#34c759" type="button"></button><button class="doodle-color" data-doodle-color="#ff9500" style="background:#ff9500" type="button"></button><input class="doodle-size" id="doodleBrushSize" type="range" min="2" max="30" value="6"></div>
+        <div class="doodle-message" id="doodleMessage">Waiting for two players…</div>
+        <button class="modal-btn primary doodle-start" id="doodleStart" type="button">🎨 Start Doodle</button><button class="modal-btn doodle-start" id="doodleNewGame" type="button" style="display:none">↻ New Game</button>
+      </div>
+      <div class="doodle-chat"><div class="doodle-chat-head">💬 Members Chat</div><div class="doodle-chat-messages" id="doodleChatMessages"></div><div class="doodle-chat-input"><input id="doodleChatInput" type="text" autocomplete="off" maxlength="200" placeholder="Chat or type a guess…"><button id="doodleChatSend" type="button">Send</button></div></div>
+    </div>
   </div>
 </div>
 
@@ -7042,7 +7411,7 @@ async function resetCoupleQuiz(){
 
 function closeCoupleQuiz(){
   if(roomRef&&cqListener)roomRef.child("games/couple-quiz").off("value",cqListener);
-  cqListener=null;cqState=null;if(cqModal)cqModal.classList.add("hidden");document.body.style.overflow="";
+  cqListener=null;cqState=null;if(cqModal)cqModal.classList.add("hidden");document.body.style.overflow="";returnToGameCenter();
 }
 function bindCoupleQuizButtons(){
   const closeBtn=document.getElementById("coupleQuizClose");
@@ -7211,6 +7580,7 @@ function closeCoupleChallenges(){
   challengeState=null;
   if(challengeModal)challengeModal.classList.add("hidden");
   document.body.style.overflow="";
+  returnToGameCenter();
 }
 
 document.getElementById("challengeClose")?.addEventListener("click",closeCoupleChallenges);
@@ -7635,14 +8005,14 @@ document.getElementById("quickGameClose")?.addEventListener("click",closeQuickGa
 <script>
 /* =========================================================
    PURLO DOODLE — REAL-TIME TWO PLAYER GAME
+   90-second round + shared members chat + automatic correct-guess turn switch
 ========================================================= */
 const DOODLE_WORDS=["Apple","Bicycle","Pizza","Rocket","Dog","Beach","Umbrella","Guitar","Elephant","Rainbow","Camera","Burger","Moon","Robot","Ice Cream","Tree","Airplane","Sunglasses","Football","Cake","House","Car","Fish","Flower","Cat","Sun","Star","Coffee","Laptop","Balloon"];
 let doodleModal=null,doodleRef=null,doodleListener=null,doodleState=null,doodleTimer=null,doodleCanvas=null,doodleCtx=null,doodleDrawing=false,doodleCurrentStroke=[],doodleColor="#111111",doodleBrushSize=6;
-function doodleDefaultState(){return{players:{},scores:{},usedWords:[],phase:"waiting",drawerId:"",guesserId:"",word:"",round:0,startedAt:0,drawEndsAt:0,guessEndsAt:0,strokes:{},result:"",winner:"",updatedAt:0};}
+function doodleDefaultState(){return{players:{},scores:{},usedWords:[],phase:"waiting",drawerId:"",guesserId:"",word:"",round:0,startedAt:0,drawEndsAt:0,strokes:{},chat:{},result:"",winner:"",updatedAt:0};}
 function doodlePlayers(){return Object.entries(doodleState?.players||{}).filter(([,p])=>p&&p.role!=="spectator").sort((a,b)=>Number(a[1].joinedAt||0)-Number(b[1].joinedAt||0)).slice(0,2);}
-function doodleIsPlayer(){return doodlePlayers().some(([id])=>id===clientId);}
 function doodleMyRole(){if(!doodleState)return"spectator";if(doodleState.drawerId===clientId)return"drawer";if(doodleState.guesserId===clientId)return"guesser";return"spectator";}
-async function doodleEnsurePlayer(){if(!doodleRef||!clientId)return;const ref=doodleRef.child("players");const snap=await ref.once("value"),players=snap.val()||{};if(players[clientId]){ref.child(clientId).onDisconnect().remove();return;}const active=Object.entries(players).filter(([,p])=>p&&p.role!=="spectator");const role=active.length<2?"player":"spectator";await ref.child(clientId).set({name:myName||"Player",role,joinedAt:firebase.database.ServerValue.TIMESTAMP});ref.child(clientId).onDisconnect().remove();}
+function doodleEnsurePlayer(){if(!doodleRef||!clientId)return Promise.resolve();const ref=doodleRef.child("players");return ref.once("value").then(async snap=>{const players=snap.val()||{};if(players[clientId]){ref.child(clientId).onDisconnect().remove();return;}const active=Object.entries(players).filter(([,p])=>p&&p.role!=="spectator");const role=active.length<2?"player":"spectator";await ref.child(clientId).set({name:myName||"Player",role,joinedAt:firebase.database.ServerValue.TIMESTAMP});ref.child(clientId).onDisconnect().remove();});}
 function doodleResizeCanvas(){if(!doodleCanvas||!doodleCtx)return;const r=doodleCanvas.getBoundingClientRect(),ratio=window.devicePixelRatio||1;doodleCanvas.width=Math.max(1,Math.round(r.width*ratio));doodleCanvas.height=Math.max(1,Math.round(r.height*ratio));doodleCtx.setTransform(ratio,0,0,ratio,0,0);doodleCtx.lineCap="round";doodleCtx.lineJoin="round";doodleRenderCanvas();}
 function doodleClearCanvas(){if(!doodleCanvas||!doodleCtx)return;const r=doodleCanvas.getBoundingClientRect();doodleCtx.clearRect(0,0,r.width,r.height);}
 function doodleDrawStroke(points,color,size){if(!doodleCtx||!points?.length)return;doodleCtx.beginPath();doodleCtx.strokeStyle=color;doodleCtx.lineWidth=size;doodleCtx.lineCap="round";doodleCtx.lineJoin="round";const f=points[0];doodleCtx.moveTo(f.x*doodleCanvas.clientWidth,f.y*doodleCanvas.clientHeight);for(let i=1;i<points.length;i++){const p=points[i];doodleCtx.lineTo(p.x*doodleCanvas.clientWidth,p.y*doodleCanvas.clientHeight);}if(points.length===1)doodleCtx.lineTo(f.x*doodleCanvas.clientWidth+.1,f.y*doodleCanvas.clientHeight+.1);doodleCtx.stroke();}
@@ -7650,59 +8020,69 @@ function doodleRenderCanvas(){if(!doodleCanvas||!doodleCtx)return;doodleClearCan
 function doodlePointerPosition(e){const r=doodleCanvas.getBoundingClientRect();return{x:Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),y:Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))};}
 function doodleStartDraw(e){if(doodleMyRole()!=="drawer"||doodleState?.phase!=="drawing")return;doodleDrawing=true;doodleCurrentStroke=[doodlePointerPosition(e)];doodleCanvas.setPointerCapture?.(e.pointerId);doodleDrawStroke(doodleCurrentStroke,doodleColor,doodleBrushSize);}
 function doodleMoveDraw(e){if(!doodleDrawing)return;doodleCurrentStroke.push(doodlePointerPosition(e));doodleDrawStroke(doodleCurrentStroke,doodleColor,doodleBrushSize);}
-async function doodleEndDraw(){if(!doodleDrawing)return;doodleDrawing=false;if(doodleCurrentStroke.length&&doodleRef&&doodleMyRole()==="drawer"){const key=doodleRef.child("strokes").push().key;await doodleRef.child("strokes").child(key).set({points:doodleCurrentStroke,color:doodleColor,size:doodleBrushSize,by:clientId,at:firebase.database.ServerValue.TIMESTAMP});}doodleCurrentStroke=[];}
+async function doodleEndDraw(){if(!doodleDrawing)return;doodleDrawing=false;if(doodleCurrentStroke.length&&doodleRef&&doodleMyRole()==="drawer"&&doodleState?.phase==="drawing"){const key=doodleRef.child("strokes").push().key;await doodleRef.child("strokes").child(key).set({points:doodleCurrentStroke,color:doodleColor,size:doodleBrushSize,by:clientId,at:firebase.database.ServerValue.TIMESTAMP});}doodleCurrentStroke=[];}
 async function doodleClear(){if(!doodleRef||doodleMyRole()!=="drawer"||doodleState?.phase!=="drawing")return;await doodleRef.child("strokes").remove();}
 async function doodleUndo(){if(!doodleRef||doodleMyRole()!=="drawer"||doodleState?.phase!=="drawing")return;const mine=Object.entries(doodleState?.strokes||{}).filter(([,s])=>s?.by===clientId).sort((a,b)=>Number(a[1].at||0)-Number(b[1].at||0));if(mine.length)await doodleRef.child("strokes").child(mine[mine.length-1][0]).remove();}
-function doodlePickUnused(used){
-  const set=new Set(Array.isArray(used)?used:[]);
-  const available=DOODLE_WORDS.filter(w=>!set.has(w));
-  if(!available.length) return "";
-  return available[Math.floor(Math.random()*available.length)];
-}
+function doodlePickUnused(used){const set=new Set(Array.isArray(used)?used:[]);const available=DOODLE_WORDS.filter(w=>!set.has(w));return available.length?available[Math.floor(Math.random()*available.length)]:"";}
+function doodleNormalize(text){return String(text||"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"");}
 async function doodleStartRound(){
   if(!doodleRef||hostId!==clientId)return;
   const players=doodlePlayers();
   if(players.length<2){showToast("Doodle needs two players.");return;}
-  const prev=doodleState||doodleDefaultState();
-  const p1=players[0][0],p2=players[1][0];
-  const drawerId=prev.drawerId?(prev.drawerId===p1?p2:p1):p1;
-  const guesserId=drawerId===p1?p2:p1;
-  const now=Date.now();
-  const scores={...(prev.scores||{})};
-  players.forEach(([id])=>{if(scores[id]==null)scores[id]=0;});
-  const usedWords=Array.isArray(prev.usedWords)?prev.usedWords:[];
-  const word=doodlePickUnused(usedWords);
-  if(!word){
-    await doodleRef.update({phase:"finished",result:"🎉 You used every Doodle word in this room!",updatedAt:firebase.database.ServerValue.TIMESTAMP});
-    return;
+  const prev=doodleState||doodleDefaultState(),p1=players[0][0],p2=players[1][0];
+  const drawerId=prev.drawerId?(prev.drawerId===p1?p2:p1):p1,guesserId=drawerId===p1?p2:p1,now=Date.now();
+  const scores={...(prev.scores||{})};players.forEach(([id])=>{if(scores[id]==null)scores[id]=0;});
+  const usedWords=Array.isArray(prev.usedWords)?prev.usedWords:[],word=doodlePickUnused(usedWords);
+  if(!word){await doodleRef.update({phase:"finished",result:"All Doodle words have been used in this room.",updatedAt:firebase.database.ServerValue.TIMESTAMP});return;}
+  await doodleRef.update({players:prev.players||{},scores,usedWords:usedWords.concat(word),phase:"drawing",drawerId,guesserId,word,round:Number(prev.round||0)+1,startedAt:now,drawEndsAt:now+90000,strokes:{},result:"",winner:"",updatedAt:now});
+  await doodleRef.child("chat").push({type:"system",text:"Round "+(Number(prev.round||0)+1)+" started. "+(players.find(([id])=>id===drawerId)?.[1]?.name||"Player")+" is drawing.",name:"Doodle",at:firebase.database.ServerValue.TIMESTAMP});
+}
+async function doodleStartGame(){if(!doodleRef||hostId!==clientId){showToast("Only the room admin can start Doodle.");return;}const players=doodlePlayers();if(players.length<2){showToast("Doodle needs two players in this room.");return;}const scores={};players.forEach(([id])=>scores[id]=0);await doodleRef.set({...doodleDefaultState(),players:doodleState?.players||{},scores,usedWords:Array.isArray(doodleState?.usedWords)?doodleState.usedWords:[]});await doodleStartRound();}
+async function doodleNewGame(){if(!doodleRef||hostId!==clientId){showToast("Only the room admin can start a new Doodle game.");return;}const players=(await doodleRef.child("players").once("value")).val()||{};const scores={};Object.entries(players).filter(([,p])=>p?.role!=="spectator").slice(0,2).forEach(([id])=>scores[id]=0);await doodleRef.set({...doodleDefaultState(),players,scores,chat:{},updatedAt:Date.now()});await doodleStartRound();}
+async function doodleFinishRound(result,winner){
+  if(!doodleRef)return;
+  await doodleRef.transaction(st=>{if(!st||st.phase!=="drawing")return st;st.phase="roundEnd";st.result=result;st.winner=winner||"";st.updatedAt=Date.now();return st;});
+}
+async function doodleSendChat(){
+  if(!doodleRef)return;
+  const input=document.getElementById("doodleChatInput"),text=String(input?.value||"").trim();if(!text)return;
+  input.value="";
+  const isGuesser=doodleMyRole()==="guesser"&&doodleState?.phase==="drawing";
+  const correct=isGuesser&&doodleNormalize(text)===doodleNormalize(doodleState.word||"");
+  const msgRef=doodleRef.child("chat").push();
+  const senderName=doodleState?.players?.[clientId]?.name||myName||"Player";
+  await msgRef.set({type:"message",name:senderName,text,by:clientId,correct,at:firebase.database.ServerValue.TIMESTAMP});
+  if(correct){
+    const result=senderName+" guessed correctly! 🎉";
+    await doodleRef.transaction(st=>{
+      if(!st||st.phase!=="drawing")return st;
+      const scores={...(st.scores||{})};scores[st.drawerId]=Number(scores[st.drawerId]||0)+1;scores[st.guesserId]=Number(scores[st.guesserId]||0)+1;
+      st.phase="roundEnd";st.result=result;st.winner=clientId;st.scores=scores;st.updatedAt=Date.now();return st;
+    });
   }
-  await doodleRef.update({players:prev.players||{},scores,usedWords:usedWords.concat(word),phase:"drawing",drawerId,guesserId,word,round:Number(prev.round||0)+1,startedAt:now,drawEndsAt:now+60000,guessEndsAt:now+90000,strokes:{},result:"",winner:"",updatedAt:firebase.database.ServerValue.TIMESTAMP});
 }
-async function doodleStartGame(){if(!doodleRef||hostId!==clientId){showToast("Only the room admin can start Doodle.");return;}const players=doodlePlayers();if(players.length<2){showToast("Doodle needs two players in this room.");return;}const scores={};players.forEach(([id])=>scores[id]=0);await doodleRef.set({...doodleDefaultState(),players:doodleState?.players||{},scores,usedWords:Array.isArray(doodleState?.usedWords)?doodleState.usedWords:[],updatedAt:firebase.database.ServerValue.TIMESTAMP});await doodleStartRound();}
-async function doodleNewGame(){if(!doodleRef||hostId!==clientId){showToast("Only the room admin can start a new Doodle game.");return;}const players=(await doodleRef.child("players").once("value")).val()||{};const scores={};Object.entries(players).filter(([,p])=>p?.role!=="spectator").slice(0,2).forEach(([id])=>scores[id]=0);await doodleRef.set({...doodleDefaultState(),players,scores,updatedAt:firebase.database.ServerValue.TIMESTAMP});await doodleStartRound();}
-async function doodleDoneDrawing(){
-  if(!doodleRef || !doodleState) return;
-  if(doodleMyRole() !== "drawer" || doodleState.phase !== "drawing") return;
-
-  await doodleRef.transaction(function(st){
-    if(!st || st.phase !== "drawing") return st;
-
-    /* End drawing immediately and give the guesser a fresh 30 seconds. */
-    st.phase = "guessing";
-    st.guessEndsAt = Date.now() + 30000;
-    st.result = "";
-    st.winner = "";
-    st.updatedAt = Date.now();
-    return st;
-  });
+function doodleRenderChat(){
+  const box=document.getElementById("doodleChatMessages");if(!box)return;box.innerHTML="";
+  const chat=Object.entries(doodleState?.chat||{}).sort((a,b)=>Number(a[1]?.at||0)-Number(b[1]?.at||0));
+  chat.forEach(([key,m])=>{const row=document.createElement("div");row.className="doodle-chat-row"+(m.by===clientId?" mine":"")+(m.correct?" correct":"")+(m.type==="system"?" system":"");const name=document.createElement("div");name.className="doodle-chat-name";name.textContent=m.type==="system"?"Doodle":(m.by===clientId?"You":m.name||"Member");const bubble=document.createElement("div");bubble.className="doodle-chat-bubble";bubble.textContent=m.text||"";row.appendChild(name);row.appendChild(bubble);box.appendChild(row);});box.scrollTop=box.scrollHeight;
 }
-
-async function doodleSubmitGuess(){if(!doodleRef||doodleMyRole()!=="guesser"||doodleState?.phase!=="guessing")return;const input=document.getElementById("doodleGuessInput"),guess=input?.value.trim();if(!guess)return;input.value="";const actual=String(doodleState.word||"").trim().toLowerCase(),normalized=guess.toLowerCase();if(normalized===actual){const scores={...(doodleState.scores||{})};scores[doodleState.drawerId]=Number(scores[doodleState.drawerId]||0)+1;scores[doodleState.guesserId]=Number(scores[doodleState.guesserId]||0)+1;await doodleRef.transaction(st=>{if(!st||st.phase!=="guessing")return st;st.phase="roundEnd";st.result=(st.players?.[clientId]?.name||myName||"Player")+" guessed correctly! 🎉";st.winner=clientId;st.scores=scores;st.updatedAt=Date.now();return st;});}else{showToast("Not quite — try again!");}}
-async function doodleTick(){if(!doodleState||!doodleRef)return;const now=Date.now();if(doodleState.phase==="drawing"&&now>=Number(doodleState.drawEndsAt||0)&&hostId===clientId){await doodleRef.transaction(st=>{if(!st||st.phase!=="drawing")return st;st.phase="guessing";st.updatedAt=Date.now();return st;});}else if(doodleState.phase==="guessing"&&now>=Number(doodleState.guessEndsAt||0)&&hostId===clientId){await doodleRef.transaction(st=>{if(!st||st.phase!=="guessing")return st;st.phase="roundEnd";st.result="Time's up! ⏰ The word was "+st.word+".";st.winner="";st.updatedAt=Date.now();return st;});}else if(doodleState.phase==="roundEnd"&&hostId===clientId&&Number(doodleState.updatedAt||0)&&now-Number(doodleState.updatedAt)>=3000){await doodleStartRound();}}
-function doodleRender(){if(!doodleModal||doodleModal.classList.contains("hidden")||!doodleState)return;const players=doodlePlayers(),role=doodleMyRole(),roleEl=document.getElementById("doodleRole"),timerEl=document.getElementById("doodleTimer"),wordEl=document.getElementById("doodleWord"),messageEl=document.getElementById("doodleMessage"),startEl=document.getElementById("doodleStart"),newEl=document.getElementById("doodleNewGame"),input=document.getElementById("doodleGuessInput"),guessBtn=document.getElementById("doodleGuessButton"),clearBtn=document.getElementById("doodleClear"),undoBtn=document.getElementById("doodleUndo"),doneBtn=document.getElementById("doodleDone"),spectator=document.getElementById("doodleSpectator");players.forEach(([id,p],i)=>{const n=document.getElementById(i===0?"doodlePlayer1Name":"doodlePlayer2Name"),sc=document.getElementById(i===0?"doodlePlayer1Score":"doodlePlayer2Score");if(n)n.textContent=(p.name||"Player")+(id===clientId?" (You)":"");if(sc)sc.textContent=Number(doodleState.scores?.[id]||0);});if(players.length<2){roleEl.textContent="Waiting for another player";wordEl.innerHTML="<span>Invite your partner to this room.</span>";messageEl.textContent="Doodle requires two active players.";startEl.style.display="block";startEl.disabled=true;newEl.style.display="none";return;}const isSpec=!doodleIsPlayer();spectator.classList.toggle("hidden",!isSpec);roleEl.textContent=isSpec?"👀 Spectator":role==="drawer"?"✏️ You are drawing":"🔎 You are guessing";if(role==="drawer")wordEl.innerHTML="Your word: <strong>"+escapeHtml(doodleState.word||"—")+"</strong>";else if(doodleState.phase==="drawing")wordEl.innerHTML="<span>🎨 Watch the drawing and wait for the guessing phase.</span>";else if(doodleState.phase==="guessing")wordEl.innerHTML="<span>🔎 Guess the word!</span>";else wordEl.innerHTML="<span>Round word: "+escapeHtml(doodleState.word||"")+"</span>";let seconds=0;if(doodleState.phase==="drawing")seconds=Math.max(0,Math.ceil((Number(doodleState.drawEndsAt)-Date.now())/1000));else if(doodleState.phase==="guessing")seconds=Math.max(0,Math.ceil((Number(doodleState.guessEndsAt)-Date.now())/1000));timerEl.textContent=doodleState.phase==="roundEnd"?"DONE":doodleState.phase==="waiting"?"—":seconds+"s";const canDraw=role==="drawer"&&doodleState.phase==="drawing",canGuess=role==="guesser"&&doodleState.phase==="guessing";clearBtn.disabled=!canDraw;undoBtn.disabled=!canDraw;doneBtn.disabled=!canDraw;doneBtn.style.display=canDraw?"inline-flex":"none";input.disabled=!canGuess;guessBtn.disabled=!canGuess;if(doodleState.phase==="drawing")messageEl.textContent=role==="drawer"?"Draw the word, then press ✓ Done Drawing when you finish! ✏️":"Watch carefully — the drawing phase is active.";else if(doodleState.phase==="guessing")messageEl.textContent=role==="guesser"?"You have 30 seconds to guess! 🔎":"Your partner is guessing your drawing.";else if(doodleState.phase==="roundEnd")messageEl.textContent=doodleState.result||"Round finished.";else messageEl.textContent="Get ready…";startEl.style.display=doodleState.phase==="waiting"?"block":"none";startEl.disabled=hostId!==clientId||players.length<2;newEl.style.display=doodleState.phase!=="waiting"?"block":"none";newEl.disabled=hostId!==clientId;doodleRenderCanvas();}
-async function startDoodle(){if(!roomRef){showToast("Join a room first.");return;}doodleModal=document.getElementById("doodleModal");doodleModal.classList.remove("hidden");document.body.style.overflow="hidden";doodleCanvas=document.getElementById("doodleCanvas");doodleCtx=doodleCanvas.getContext("2d");doodleResizeCanvas();doodleRef=roomRef.child("games/doodle");try{const snap=await doodleRef.once("value");if(!snap.exists())await doodleRef.set(doodleDefaultState());await doodleEnsurePlayer();if(doodleListener)doodleRef.off("value",doodleListener);doodleListener=s=>{doodleState=s.val()||doodleDefaultState();doodleRender();};doodleRef.on("value",doodleListener);doodleState=(await doodleRef.once("value")).val()||doodleDefaultState();doodleRender();clearInterval(doodleTimer);doodleTimer=setInterval(async()=>{doodleRender();await doodleTick();},500);}catch(e){console.error("Doodle:",e);showToast("Could not open Doodle.");}}
-function closeDoodle(){clearInterval(doodleTimer);doodleTimer=null;if(doodleRef&&doodleListener)doodleRef.off("value",doodleListener);doodleRef=null;doodleListener=null;doodleState=null;if(doodleModal)doodleModal.classList.add("hidden");document.body.style.overflow="";}
-document.getElementById("doodleClose")?.addEventListener("click",closeDoodle);document.getElementById("doodleStart")?.addEventListener("click",doodleStartGame);document.getElementById("doodleNewGame")?.addEventListener("click",doodleNewGame);document.getElementById("doodleClear")?.addEventListener("click",doodleClear);document.getElementById("doodleUndo")?.addEventListener("click",doodleUndo);document.getElementById("doodleDone")?.addEventListener("click",doodleDoneDrawing);document.getElementById("doodleGuessButton")?.addEventListener("click",doodleSubmitGuess);document.getElementById("doodleGuessInput")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();doodleSubmitGuess();}});document.querySelectorAll(".doodle-color").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".doodle-color").forEach(x=>x.classList.remove("active"));b.classList.add("active");doodleColor=b.dataset.doodleColor;}));document.getElementById("doodleBrushSize")?.addEventListener("input",e=>doodleBrushSize=Number(e.target.value)||6);document.getElementById("doodleCanvas")?.addEventListener("pointerdown",doodleStartDraw);document.getElementById("doodleCanvas")?.addEventListener("pointermove",doodleMoveDraw);document.getElementById("doodleCanvas")?.addEventListener("pointerup",doodleEndDraw);document.getElementById("doodleCanvas")?.addEventListener("pointercancel",doodleEndDraw);window.addEventListener("resize",()=>{if(doodleModal&&!doodleModal.classList.contains("hidden"))doodleResizeCanvas();});document.getElementById("doodleModal")?.addEventListener("click",e=>{if(e.target===e.currentTarget)closeDoodle();});
+function doodleTick(){if(!doodleState||!doodleRef)return;const now=Date.now();if(doodleState.phase==="drawing"&&now>=Number(doodleState.drawEndsAt||0)&&hostId===clientId){doodleFinishRound("Time's up! ⏰ The word was "+doodleState.word+".","");}else if(doodleState.phase==="roundEnd"&&hostId===clientId&&Number(doodleState.updatedAt||0)&&now-Number(doodleState.updatedAt)>=2500){doodleStartRound();}}
+function doodleRender(){
+  if(!doodleModal||doodleModal.classList.contains("hidden")||!doodleState)return;
+  const players=doodlePlayers(),role=doodleMyRole(),roleEl=document.getElementById("doodleRole"),timerEl=document.getElementById("doodleTimer"),wordEl=document.getElementById("doodleWord"),messageEl=document.getElementById("doodleMessage"),startEl=document.getElementById("doodleStart"),newEl=document.getElementById("doodleNewGame"),chatInput=document.getElementById("doodleChatInput"),chatSend=document.getElementById("doodleChatSend"),clearEl=document.getElementById("doodleClear"),undoEl=document.getElementById("doodleUndo"),spectator=document.getElementById("doodleSpectator");
+  players.forEach(([id,p],i)=>{const n=document.getElementById(i===0?"doodlePlayer1Name":"doodlePlayer2Name"),sc=document.getElementById(i===0?"doodlePlayer1Score":"doodlePlayer2Score");if(n)n.textContent=(p.name||"Player")+(id===clientId?" (You)":"");if(sc)sc.textContent=Number(doodleState.scores?.[id]||0);});
+  const active=players.length>=2,isSpec=!doodlePlayers().some(([id])=>id===clientId);spectator.classList.toggle("hidden",!isSpec);
+  roleEl.textContent=!active?"Waiting for another player":isSpec?"👀 Spectator":role==="drawer"?"✏️ You are drawing":"🔎 You are guessing";
+  if(role==="drawer"&&doodleState.phase==="drawing")wordEl.innerHTML="Your word: <strong>"+escapeHtml(doodleState.word||"—")+"</strong>";else if(doodleState.phase==="drawing")wordEl.innerHTML="<span>🎨 Watch the drawing and type your guesses or discussion in chat.</span>";else if(doodleState.phase==="roundEnd")wordEl.innerHTML="<span>Round finished.</span>";else wordEl.innerHTML="<span>Waiting for the next round…</span>";
+  const seconds=doodleState.phase==="drawing"?Math.max(0,Math.ceil((Number(doodleState.drawEndsAt)-Date.now())/1000)):0;timerEl.textContent=doodleState.phase==="drawing"?seconds+"s":doodleState.phase==="roundEnd"?"DONE":"90s";
+  const canDraw=role==="drawer"&&doodleState.phase==="drawing";clearEl.disabled=!canDraw;undoEl.disabled=!canDraw;chatInput.disabled=!active||doodleState.phase!=="drawing";chatSend.disabled=chatInput.disabled;
+  if(doodleState.phase==="drawing")messageEl.textContent=canDraw?"Draw the word. Everyone can see the discussion and guesses in chat.":role==="guesser"?"Type your guesses in the chat — the correct answer will turn green.":"Watch the drawing and chat.";else if(doodleState.phase==="roundEnd")messageEl.textContent=doodleState.result||"Round finished.";else messageEl.textContent=!active?"Doodle requires two active players.":"Get ready…";
+  startEl.style.display=doodleState.phase==="waiting"?"block":"none";startEl.disabled=hostId!==clientId||!active;newEl.style.display=doodleState.phase!=="waiting"?"block":"none";newEl.disabled=hostId!==clientId;
+  doodleRenderChat();doodleRenderCanvas();
+}
+async function startDoodle(){if(!roomRef){showToast("Join a room first.");return;}doodleModal=document.getElementById("doodleModal");doodleModal.classList.remove("hidden");document.body.style.overflow="hidden";doodleCanvas=document.getElementById("doodleCanvas");doodleCtx=doodleCanvas.getContext("2d");doodleResizeCanvas();doodleRef=roomRef.child("games/doodle");try{const snap=await doodleRef.once("value");if(!snap.exists())await doodleRef.set(doodleDefaultState());await doodleEnsurePlayer();if(doodleListener)doodleRef.off("value",doodleListener);doodleListener=s=>{doodleState=s.val()||doodleDefaultState();doodleRender();};doodleRef.on("value",doodleListener);doodleState=(await doodleRef.once("value")).val()||doodleDefaultState();doodleRender();clearInterval(doodleTimer);doodleTimer=setInterval(()=>{doodleRender();doodleTick();},500);}catch(e){console.error("Doodle:",e);showToast("Could not open Doodle.");}}
+function closeDoodle(){clearInterval(doodleTimer);doodleTimer=null;if(doodleRef&&doodleListener)doodleRef.off("value",doodleListener);doodleRef=null;doodleListener=null;doodleState=null;if(doodleModal)doodleModal.classList.add("hidden");document.body.style.overflow="";returnToGameCenter();}
+document.getElementById("doodleClose")?.addEventListener("click",closeDoodle);document.getElementById("doodleStart")?.addEventListener("click",doodleStartGame);document.getElementById("doodleNewGame")?.addEventListener("click",doodleNewGame);document.getElementById("doodleClear")?.addEventListener("click",doodleClear);document.getElementById("doodleUndo")?.addEventListener("click",doodleUndo);document.getElementById("doodleChatSend")?.addEventListener("click",doodleSendChat);document.getElementById("doodleChatInput")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();doodleSendChat();}});document.querySelectorAll(".doodle-color").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".doodle-color").forEach(x=>x.classList.remove("active"));b.classList.add("active");doodleColor=b.dataset.doodleColor;}));document.getElementById("doodleBrushSize")?.addEventListener("input",e=>doodleBrushSize=Number(e.target.value)||6);document.getElementById("doodleCanvas")?.addEventListener("pointerdown",doodleStartDraw);document.getElementById("doodleCanvas")?.addEventListener("pointermove",doodleMoveDraw);document.getElementById("doodleCanvas")?.addEventListener("pointerup",doodleEndDraw);document.getElementById("doodleCanvas")?.addEventListener("pointercancel",doodleEndDraw);window.addEventListener("resize",()=>{if(doodleModal&&!doodleModal.classList.contains("hidden"))doodleResizeCanvas();});document.getElementById("doodleModal")?.addEventListener("click",e=>{if(e.target===e.currentTarget)closeDoodle();});
 
 /* =========================================================
    GUESS THE MOVIE — BOLLYWOOD ONLY
@@ -7799,15 +8179,6 @@ async function startEmojiMovies(){if(!roomRef){showToast("Join a room first.");r
 function closeEmojiMovies(){if(emojiMovieRef&&emojiMovieListener)emojiMovieRef.off("value",emojiMovieListener);emojiMovieRef=null;emojiMovieListener=null;emojiMovieState=null;longGameModal.classList.add("hidden");document.body.style.overflow="";}
 </script>
 
-<!-- WALKIE TALKIE -->
-<div id="walkieWidget" class="walkie-widget" aria-label="Walkie Talkie">
-  <button id="walkieOrb" class="walkie-orb" type="button" aria-label="Open Walkie Talkie" title="Walkie Talkie">📻</button>
-  <div class="walkie-info">
-    <div class="walkie-title">Walkie Talkie</div>
-    <div id="walkieStatus" class="walkie-status">Hold 🎙️ to talk</div>
-    <div id="walkiePeer" class="walkie-peer">Tap 📻 to open • Hold 🎙️ to talk</div>
-  </div>
-  <audio id="walkieAudio" class="walkie-audio" autoplay playsinline></audio>
-</div>
+
 </body>
 </html>
